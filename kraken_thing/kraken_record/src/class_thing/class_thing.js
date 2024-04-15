@@ -58,7 +58,7 @@ export class KrThing {
 
 
     register(callback){
-        this._callbacks.push(callback)
+        this._callbacks.push(callback);
     }
 
     dispatchEvent(event){
