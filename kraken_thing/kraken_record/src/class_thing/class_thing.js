@@ -29,6 +29,7 @@ export class KrThing {
     constructor(record_type = null, record_id = null) {
         this._properties = [];
 
+        this._callbacks=[];
         // metadata
         this.metadata = new KrMetadata();
 
@@ -48,6 +49,26 @@ export class KrThing {
         }
     }
 
+
+
+
+    // ----------------------------------------------------
+    // Events
+    // ----------------------------------------------------
+
+
+    register(callback){
+        this._callbacks.push(callback)
+    }
+
+    dispatchEvent(event){
+
+        for(let c of this._callbacks){
+            c(event);
+        }
+    }
+    
+    
     // ----------------------------------------------------
     // Attributes
     // ----------------------------------------------------
@@ -308,6 +329,9 @@ export class KrThing {
         actionType,
         previousValue
     ) {
+
+        // Get olf value
+        let oldValue = this.getProperty(propertyID)?.value;
        
         // get or create property object
         let property = this.getProperty(propertyID);
@@ -341,6 +365,10 @@ export class KrThing {
             previousValue,
         );
 
+        // dispatch event
+        let event = {'type': change, 'propertyID': propertyID, 'oldValue': oldValue, 'newValue': value};
+        this.dispatchEvent(event);
+        
         return newValues;
     }
 
