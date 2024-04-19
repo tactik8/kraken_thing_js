@@ -10,3 +10,14 @@ Main library for thing that includes all sub libraries
 
 ## Running tests
 node --experimental-vm-modules node_modules/.bin/jest
+
+
+## How to use
+
+```
+
+import { krThing } from 'https://cdn.jsdelivr.net/gh/tactik8/kraken_thing_js@main/kraken_thing/kraken_thing.js';
+
+let t = new KrThing();
+
+```
