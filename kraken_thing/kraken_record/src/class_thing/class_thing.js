@@ -366,7 +366,8 @@ export class KrThing {
         );
 
         // dispatch event
-        let event = {'type': change, 'propertyID': propertyID, 'oldValue': oldValue, 'newValue': value};
+        let newValue = this.getProperty(propertyID).value;
+        let event = {'type': 'change', record_type: this.record_type, record_id: this.record_id,  'propertyID': propertyID, 'oldValue': oldValue, 'newValue': newValue};
         this.dispatchEvent(event);
         
         return newValues;
