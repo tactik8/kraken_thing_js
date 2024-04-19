@@ -1,6 +1,6 @@
 
 //import { KrThing as KrThingRecord } from '../kraken_record/kraken_record.js';
-import { KrThing as KrThingRecord } from 'https://cdn.jsdelivr.net/gh/tactik8/krakenJsLibraryRecord@main/kraken_thing/kraken_thing.js';
+import { KrThing as KrThingRecord } from 'https://cdn.jsdelivr.net/gh/tactik8/krakenJsLibraryRecord/kraken_record/kraken_record.js';
 
 
 import { KrakenSchemas } from '../kraken_schema/kraken_schema.js';
