@@ -36,7 +36,6 @@ export class KrThing extends KrThingRecord {
 
     constructor(record_type = null, record_id = null) {
         super(record_type, record_id);
-    
         
     }
 
@@ -50,12 +49,14 @@ export class KrThing extends KrThingRecord {
         return KrakenSchemas.get(this.record_type);
     }
 
-    
-    // Properties
 
 
     
+
     
+    // -----------------------------------------------------
+    //  Properties 
+    // -----------------------------------------------------
     
     get actionStatus(){
         return this.getProperty('actionStatus').value;
@@ -212,6 +213,10 @@ export class KrThing extends KrThingRecord {
     }
     
 
+
+
+
+    
     // html
 
     html_form(){

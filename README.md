@@ -29,6 +29,22 @@ let t = new KrThing();
 ### Thing 
 
 
+### Monitor changes (addEventListener)
+
+eventType: 
+- all (all events)
+- add
+- delete
+- replace
+
+```
+
+thing.addEventListener(eventType, callbackFn)
+
+
+```
+
+
 ### Conditions: propertyValueSpecification
 
 #### Filter
