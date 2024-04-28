@@ -8,10 +8,8 @@ import { KrakenDataApiClient } from "../kraken_data_api_client/kraken_data_api_c
 
 import {kraken_bootstrap} from '../kraken_bootstrap/kraken_bootstrap.js';
 
-//import {get_html_form } from '../kraken_html/html_forms/html_forms.js';
 
-
-
+console.log('init')
 
 
 
@@ -34,7 +32,7 @@ export class KrListItem extends KrThing {
     constructor(item, record_id) {
         super('listItem', record_id);
         this.item = item;
-
+        if(!record_id){this.setProperty('@id', String(crypto.randomUUID()))}
     }
 
 
@@ -50,7 +48,7 @@ export class KrListItem extends KrThing {
 
     get previousItem(){
         if(this.getProperty('previousItem')){
-            return this.getProperty('previousItem').value;
+            return this.getProperty('previousItem')?.value || null;
         };
         return null;
     }
@@ -60,7 +58,7 @@ export class KrListItem extends KrThing {
     }
     get nextItem(){
         if(this.getProperty('nextItem')){
-            return this.getProperty('nextItem').value;
+            return this.getProperty('nextItem')?.value || null;
         };
         return null;
        
@@ -73,7 +71,7 @@ export class KrListItem extends KrThing {
 
     get position(){
         if(this.getProperty('position')){
-            return this.getProperty('position').value;
+            return this.getProperty('position')?.value || null;
         };
         return null;
     }
@@ -111,6 +109,7 @@ export class KrThings extends KrThing {
 
         let results = [];
         let t = this.firstItem;
+        
         while(t){
             results.push(t);
             t = this.get(t.nextItem);
@@ -139,12 +138,13 @@ export class KrThings extends KrThing {
         if (this._items.length == 0){
             return null;
         };
-        for (let i=0; i< this._items.length; i++){
 
-            if(this._items[i].previousItem == null && this._items[i].position!=null){
-                return this._items[i];
+        for (let item of this._items){
+            if(!item.previousItem || item.previousItem==null){
+                return item
             }
-        };
+        }
+        
         return null;
         
     }
@@ -153,13 +153,15 @@ export class KrThings extends KrThing {
         if (this._items.length == 0){
             return null;
         };
-        for (let i=0; i< this._items.length; i++){
-
-            if(this._items[i].nextItem == null && this._items[i].position!=null){
-                return this._items[i];
+        for (let item of this._items){
+            console.log(item.record_id, item.nextItem)
+            if(item.nextItem === undefined || item.nextItem == null){
+                return item
             }
-        };
+         
+        }
         return null;
+        
     }
     
     add(listItem, itemId){
@@ -170,11 +172,10 @@ export class KrThings extends KrThing {
         };
         listItem.position = this._items.length;
 
-        let lastItem = this.lastItem;
+        let lastItem = this.get(this.lastItem);
         
         
         if (lastItem){
-            
             listItem.position = lastItem.position + 1;
             listItem.previousItem = lastItem;
             lastItem.nextItem = listItem;
@@ -204,6 +205,11 @@ export class KrThings extends KrThing {
         }
     }
 
+    // -----------------------------------------------------
+    //  CRUD for items 
+    // -----------------------------------------------------
+
+    
     remove(itemRef){
 
         var item = this.get(itemRef);
@@ -239,6 +245,8 @@ export class KrThings extends KrThing {
         
     }
 
+
+   
     
     insertBefore(ref, itemRef){
 
@@ -342,6 +350,39 @@ export class KrThings extends KrThing {
     }
 
 
+    // -----------------------------------------------------
+    //  Filters 
+    // -----------------------------------------------------
+
+    filter(propertyValueSpecifications){
+        /**
+         * Returns new Things with filtered items
+         */
+
+
+        let newThings = new KrThings()
+
+        
+        for(let item of this.items){
+          
+            let result = propertyValueSpecifications.map(pvs => pvs.test(item.item));
+            console.log(item.record_id, item.item.getProperty('name').value, result)
+            console.log(result.every(Boolean))
+            if (result.every(Boolean) == true){
+                console.log('all true')
+                newThings.add(item.item)
+            }
+        }
+
+        return newThings
+    }
+
+    
+    // -----------------------------------------------------
+    //  HTML components 
+    // -----------------------------------------------------
+
+    
 
     html_cardGrid(parentElement){
 
