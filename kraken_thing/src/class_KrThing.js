@@ -226,11 +226,11 @@ export class KrThing extends KrThingRecord {
 
     html_cardVertical(){
         
-        return kraken_bootstrap.library.main.card.card_vertical(this.heading_image, this.heading1, this.heading2, this.headingText)
+        return kraken_bootstrap.library.main.card.card_vertical(this.get_headingImage(), this.get_heading1(), this.get_heading2(), this.get_headingText())
         
     }
     html_cardSmall(){
 
-        return kraken_bootstrap.library.main.card.card_small(this.heading_image, this.heading1, this.heading2, this.headingText)
+        return kraken_bootstrap.library.main.card.card_small(this.get_headingImage(), this.get_heading1(), this.get_heading2(), this.get_headingText())
     }
 }
