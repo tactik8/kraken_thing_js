@@ -50,8 +50,7 @@ function test3() {
 function test4(){
 
 
-    let thing = new KrThing('Person', 'abc')
-    thing.setProperty('givenName', 'bob')
+    let thing = new KrThing('person', 'abc')
     let card = thing.html_cardVertical()
     let test = document.getElementById('test')
     test.appendChild(card)

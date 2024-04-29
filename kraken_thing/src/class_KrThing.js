@@ -185,7 +185,9 @@ export class KrThing extends KrThingRecord {
     }
 
 
-    // Haadings
+    // -----------------------------------------------------
+    //  Headings  
+    // -----------------------------------------------------
 
 
     get_sample(record_id){
