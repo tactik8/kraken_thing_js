@@ -6,8 +6,7 @@
 import { KrThing } from './class_KrThing.js';
 import { KrakenDataApiClient } from "../kraken_data_api_client/kraken_data_api_client.js";
 
-import {kraken_bootstrap} from '../kraken_bootstrap/kraken_bootstrap.js';
-
+import { kraken_bootstrap } from 'https://tactik8.github.io/krakenJsBootstrap/kraken_bootstrap/kraken_bootstrap.js'
 
 console.log('init')
 

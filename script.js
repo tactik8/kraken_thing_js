@@ -1,4 +1,3 @@
-import { things } from "./kraken_thing/kraken_bootstrap/things/things.js";
 import { KrThing } from "./kraken_thing/kraken_thing.js";
 import { KrThings } from "./kraken_thing/kraken_thing.js";
 import { KrListItem } from "./kraken_thing/kraken_thing.js";

@@ -3,22 +3,7 @@
 import { KrakenSchemas } from '../../kraken_schema/kraken_schema.js';
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 export function get_html_form(record_types){
-
-
     
     
     record_types = ensureArray(record_types);
@@ -28,8 +13,6 @@ export function get_html_form(record_types){
         things.push(KrakenSchemas.get(record_types[i]));
     };
 
-
-    
     let f = document.createElement('form');
 
     f.appendChild(get_inputs(things));
