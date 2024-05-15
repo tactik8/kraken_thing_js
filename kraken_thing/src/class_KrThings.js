@@ -8,7 +8,7 @@ import { KrakenDataApiClient } from "../kraken_data_api_client/kraken_data_api_c
 
 import { kraken_bootstrap } from 'https://tactik8.github.io/krakenJsBootstrap/kraken_bootstrap/kraken_bootstrap.js'
 
-console.log('init')
+
 
 
 
@@ -153,7 +153,6 @@ export class KrThings extends KrThing {
             return null;
         };
         for (let item of this._items){
-            console.log(item.record_id, item.nextItem)
             if(item.nextItem === undefined || item.nextItem == null){
                 return item
             }
@@ -373,10 +372,8 @@ export class KrThings extends KrThing {
         for(let item of this.items){
           
             let result = propertyValueSpecifications.map(pvs => pvs.test(item.item));
-            console.log(item.record_id, item.item.getProperty('name').value, result)
-            console.log(result.every(Boolean))
+           
             if (result.every(Boolean) == true){
-                console.log('all true')
                 newThings.add(item.item)
             }
         }
