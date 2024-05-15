@@ -50,12 +50,22 @@ function test3() {
 function test4(){
 
 
-    let thing = new KrThing('Person', 'abc')
-    thing.setProperty('givenName', 'bob')
-    let card = thing.html_cardVertical()
-    let test = document.getElementById('test')
-    test.appendChild(card)
+    let thing = new KrThing('Person', 'abc2')
+    thing.setProperty('name', 'bob')
+
+    console.log('bb')
+    console.log('cc', thing.getSystemRecord())
+    console.log('dd')
+    
+    thing.api_post()
+
+    let t = new KrThing('Person', 'abc2')
+    t.api_get().then(result => console.log('aa', t.getSystemRecord())
+
+        
+    )
+    console.log('a', t.getSystemRecord())
     
 }
 
-test4();
+//test4();
