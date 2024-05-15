@@ -165,6 +165,14 @@ export class KrThings extends KrThing {
     
     add(listItem, itemId){
 
+        if(Array.isArray(listItem)){
+            for(let l of listItem){
+                this.add(l)
+            }
+            return   
+        }
+
+
         
         if(!(listItem instanceof KrListItem)){
             listItem = new KrListItem(listItem, itemId);

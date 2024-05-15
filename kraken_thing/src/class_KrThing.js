@@ -50,9 +50,6 @@ export class KrThing extends KrThingRecord {
     }
 
 
-
-    
-
     
     // -----------------------------------------------------
     //  Properties 
