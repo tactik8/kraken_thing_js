@@ -29,7 +29,7 @@ export class KrListItem extends KrThing {
 
 
     constructor(item, record_id) {
-        super('listItem', record_id);
+        super('ListItem', record_id);
         this.item = item;
         if(!record_id){this.setProperty('@id', String(crypto.randomUUID()))}
     }
@@ -99,7 +99,7 @@ export class KrThings extends KrThing {
 
 
     constructor(record_type = null, record_id = null) {
-        super('itemList', record_id);
+        super('ItemList', record_id);
 
         this._items = [];
     }

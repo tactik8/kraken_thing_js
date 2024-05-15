@@ -69,3 +69,40 @@ function test4(){
 }
 
 //test4();
+
+
+
+
+function test12() {
+
+
+    // Generate list portion
+    let record = {
+        "@type": "ItemList",
+        "@id": "ItemListTest13",
+        "name": "ItemListTest13",
+        "itemListElement": {
+            "@type": "Thing",
+            "@id": "abc123",
+            "name": "test"
+        }
+
+    }
+
+    let things = new KrThings("ItemList", "ItemListTest13")
+    things.record = record
+
+    things.api_post().then(result => {
+
+        let things2 = new KrThings("ItemList", "ItemListTest13")
+        things2.api_get().then( result =>
+
+            console.log('vv', things2.record)
+        )
+    }
+    )
+    return
+
+}
+
+//test12()

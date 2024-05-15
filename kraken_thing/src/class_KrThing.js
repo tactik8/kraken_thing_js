@@ -172,6 +172,7 @@ export class KrThing extends KrThingRecord {
     async api_get() {
         var k = new KrakenDataApiClient();
         var fullRecord = await k.get(this.record_type, this.record_id)
+        console.log(fullRecord)
         this.setSystemRecord(fullRecord);
         return;
         
