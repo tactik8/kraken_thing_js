@@ -174,6 +174,23 @@ export class KrThing extends KrThingRecord {
         var fullRecord = await k.get(this.record_type, this.record_id)
         console.log(fullRecord)
         this.setSystemRecord(fullRecord);
+
+
+        let eventRecord = {
+            "@type": "updateAction",
+            "@id": String(crypto.randomUUID()),
+            "targetCollection": this.record_ref,
+            "object": this.record,
+            "actionStatus": "completedActionStatus",
+            "timeStart": new Date(),
+            "timeEnd": new Date()
+        }
+
+        
+        const newEvent = new CustomEvent("kr-updateAction", { detail: eventRecord });
+        this.dispatchEvent(newEvent)
+
+        
         return;
         
     }
