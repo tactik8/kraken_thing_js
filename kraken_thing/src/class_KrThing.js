@@ -1,19 +1,17 @@
 
-//import { KrThing as KrThingRecord } from '../kraken_record/kraken_record.js';
-import { KrThing as KrThingRecord } from 'https://tactik8.github.io/krakenJsLibraryRecord/kraken_record/kraken_record.js';
 
+import { KrThing as KrThingRecord } from 'https://tactik8.github.io/krakenJsLibraryRecord/kraken_record/kraken_record.js';
 
 import { KrakenSchemas } from 'https://tactik8.github.io/krakenJsSchema/kraken_schema/kraken_schema.js'
 
 import { KrSamples } from 'https://tactik8.github.io/krakenJsSchema/kraken_schema/kraken_schema.js'
 
-
 import { KrakenDataApiClient } from "../kraken_data_api_client/kraken_data_api_client.js";
+
 import { kraken_bootstrap } from 'https://tactik8.github.io/krakenJsBootstrap/kraken_bootstrap/kraken_bootstrap.js'
 
 
 
-//import {get_html_form } from '../kraken_html/html_forms/html_forms.js';
 
 export class KrThing extends KrThingRecord {
     /* Contains metadata to qualify a value

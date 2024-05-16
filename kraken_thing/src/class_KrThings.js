@@ -6,9 +6,6 @@
 import { KrThing } from './class_KrThing.js';
 import { KrakenDataApiClient } from "../kraken_data_api_client/kraken_data_api_client.js";
 
-import { kraken_bootstrap } from 'https://tactik8.github.io/krakenJsBootstrap/kraken_bootstrap/kraken_bootstrap.js'
-
-
 
 
 
@@ -388,25 +385,6 @@ export class KrThings extends KrThing {
 
     
 
-    html_cardGrid(parentElement){
-
-
-        var cards = [];
-        for (let i=0; i< this.items.length; i++){
-
-            cards.push(this.items[i].html_cardVertical());
-        };
-        
-        var cardGrid = kraken_bootstrap.library.main.cardGrid(cards);
-
-      
-        if (parentElement){
-          
-            parentElement.appendChild(cardGrid);
-        };
-        
-        return cardGrid;
-        
-    }
+  
     
 }

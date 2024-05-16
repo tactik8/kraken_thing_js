@@ -1,4 +1,5 @@
 
+import { KrThing as KrThingRecord } from 'https://tactik8.github.io/krakenJsLibraryRecord/kraken_record/kraken_record.js';
 import { KrThings } from '../class_KrThings.js';
 import { KrThing } from '../class_KrThing.js';
 
@@ -28,6 +29,9 @@ test('KrThing init', function () {
     var i4 = t.add(k4, 'id4');
 
     var last = t.lastItem;
+
+
+    
     expect(last.position).toStrictEqual(3);
 
     expect(i1.nextItem.ref).toStrictEqual(i2.ref);
