@@ -177,8 +177,6 @@ export class KrThings extends KrThing {
         
     }
 
-
-   
     
     insertBefore(ref, itemRef){
 

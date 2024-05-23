@@ -16,7 +16,7 @@ node --experimental-vm-modules node_modules/.bin/jest
 
 ```
 
-import { KrThing } from 'https://tactik8.github.io/kraken_thing_js/kraken_thing/kraken_thing.js';
+import { KrThing } from 'https://tactik8.github.io/kraken_thing_js/dist/main.js';
 
 let t = new KrThing();
 
