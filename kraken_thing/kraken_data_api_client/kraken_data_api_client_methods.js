@@ -20,8 +20,8 @@ export async function kraken_api_get_async(apiBaseUrl, apiPath, headers, record_
 
     const response = await fetch(new_url, requestOptions)
     
-    let record = await response.json();
-    console.log(response.status)
+    let record =  await response.json()
+    console.log(response.body)
     console.log('get', record)
     return record
 

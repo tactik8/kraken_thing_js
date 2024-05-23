@@ -14,5 +14,9 @@
         "plugins": [
             "@babel/plugin-syntax-import-attributes"
         ]
+    },
+    "dependencies": {
+        "krakenjsschema": "^1.0.0",
+        "krakenrecordjs": "^1.0.1"
     }
 }

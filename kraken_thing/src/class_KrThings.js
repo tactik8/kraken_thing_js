@@ -177,7 +177,6 @@ export class KrThings extends KrThing {
 
         let lastItem = this.get(this.lastItem);
         
-        
         if (lastItem){
             listItem.position = lastItem.position + 1;
             listItem.previousItem = lastItem;

@@ -1,14 +1,17 @@
 
 
-import { KrThing as KrThingRecord } from 'https://tactik8.github.io/krakenJsLibraryRecord/kraken_record/kraken_record.js';
+//import { KrThing as KrThingRecord } from '../../node_modules/krakenrecordjs/kraken_record/kraken_record.js';
 
-import { KrakenSchemas } from 'https://tactik8.github.io/krakenJsSchema/kraken_schema/kraken_schema.js'
+import { KrThing as KrThingRecord } from 'krakenrecordjs';
 
-import { KrSamples } from 'https://tactik8.github.io/krakenJsSchema/kraken_schema/kraken_schema.js'
+
+import { KrakenSchemas } from '../../node_modules/krakenjsschema/kraken_schema/kraken_schema.js'
+
+import { KrSamples } from '../../node_modules/krakenjsschema/kraken_schema/kraken_schema.js'
 
 import { KrakenDataApiClient } from "../kraken_data_api_client/kraken_data_api_client.js";
 
-import { kraken_bootstrap } from 'https://tactik8.github.io/krakenJsBootstrap/kraken_bootstrap/kraken_bootstrap.js'
+//import { kraken_bootstrap } from 'https://tactik8.github.io/krakenJsBootstrap/kraken_bootstrap/kraken_bootstrap.js'
 
 
 
@@ -236,20 +239,5 @@ export class KrThing extends KrThingRecord {
 
 
     
-    // html
-
-    html_form(){
-
-        
-    }
-
-    html_cardVertical(){
-        
-        return kraken_bootstrap.library.main.card.card_vertical(this.get_headingImage(), this.get_heading1(), this.get_heading2(), this.get_headingText())
-        
-    }
-    html_cardSmall(){
-
-        return kraken_bootstrap.library.main.card.card_small(this.get_headingImage(), this.get_heading1(), this.get_heading2(), this.get_headingText())
-    }
+   
 }

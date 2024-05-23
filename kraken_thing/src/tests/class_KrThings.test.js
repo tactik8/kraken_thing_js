@@ -1,5 +1,5 @@
 
-import { KrThing as KrThingRecord } from 'https://tactik8.github.io/krakenJsLibraryRecord/kraken_record/kraken_record.js';
+
 import { KrThings } from '../class_KrThings.js';
 import { KrThing } from '../class_KrThing.js';
 
