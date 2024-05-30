@@ -254,7 +254,7 @@ class $14fcc60f5820458e$export$f22625b8b2b04e84 extends (0, $836e50e45781687c$ex
 
     */ constructor(item, record_id){
         super("ListItem", record_id);
-        this.item = item;
+        this.setProperty("item", item);
         if (!record_id) this.setProperty("@id", String(crypto.randomUUID()));
     }
     get item() {
@@ -317,7 +317,7 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
     }
     set items(values) {
         values = $347a3ff9d6941f10$var$ensureArray(values);
-        for(let value in values)this.add(value);
+        for (let value of values)this.add(value);
         return;
     }
     get record() {

@@ -42,7 +42,7 @@ export class KrThings extends KrThing {
 
         values = ensureArray(values)
 
-        for(let value in values){
+        for(let value of values){
             this.add(value)
         }
 

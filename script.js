@@ -66,7 +66,31 @@ function test1(){
     let thing = new KrThing()
     thing.record = record
     //console.log(JSON.stringify(thing.record, null, 4))
+
+
+    let ii = new KrThing()
+    ii.record = {
+             "@type": "person",
+             "@id": "person_1",
+             "givenName": "givenName_1",
+             "familyName": "familyName_1",
+             "email": "test@test.com",
+             "telephone": "1-514-111-2222",
+             "hasOccupation": {
+                 "@type": "Occupation",
+                 "name": "occupation_1"
+                 },
+             "worksfor": {
+                 "@type": "organization",
+                 "name": "test_org_1",
+                 "url": "https://www.test.com"
+                 }
+         }
+    
+
+    let i = new KrListItem(ii)
+    console.log(i.record)
     
 }
 
-test1()
+//test1()
