@@ -336,19 +336,19 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
         }
     }
     get itemRecords() {
-        let items = this.getProperty("listItemElement").values;
+        let items = this.getProperty("itemListElement").values;
         let results = [];
         for (let item of items)results.push(item.item.record);
         return results;
     }
     get itemFullRecords() {
-        let items = this.getProperty("listItemElement").values;
+        let items = this.getProperty("itemListElement").values;
         let results = [];
         for (let item of items)results.push(item.item.fullRecord);
         return results;
     }
     get firstItem() {
-        let items = this.getProperty("listItemElement").values;
+        let items = this.getProperty("itemListElement").values;
         if (items.length == 0) return null;
         for (let item of items){
             if (!item.previousItem || item.previousItem == null) return item;
@@ -356,7 +356,7 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
         return null;
     }
     get lastItem() {
-        let items = this.getProperty("listItemElement").values;
+        let items = this.getProperty("itemListElement").values;
         if (items.length == 0) return null;
         for (let item of items){
             if (item.nextItem === undefined || item.nextItem == null) return item;
@@ -376,7 +376,7 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
             lastItem.nextItem = listItem;
         } else listItem.position = 0;
         // Add to list if not already in it.
-        if (!this.get(listItem)) this.addProperty("listItemElement", listItem);
+        if (!this.get(listItem)) this.addProperty("itemListElement", listItem);
         return listItem;
     }
     reCalculatePosition() {
@@ -401,7 +401,7 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
         if (p1) p1.nextItem = n;
         if (n) n.previousItem = p1;
         // Remove from list
-        this.deleteProperty("listItemElement", item);
+        this.deleteProperty("itemListElement", item);
         // Sets position
         item.position = null;
         this.reCalculatePosition();
@@ -423,7 +423,7 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
         // Sets position
         this.reCalculatePosition();
         // Add to list if not already in it.
-        if (!this.get(item.ref)) this.addProperty("listItemElement", item);
+        if (!this.get(item.ref)) this.addProperty("itemListElement", item);
         return;
     }
     insertAfter(ref, itemRef) {
@@ -440,7 +440,7 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
         // Sets position
         this.reCalculatePosition();
         // Add to list if not already in it.
-        if (!this.get(item.ref)) this.addProperty("listItemElement", item);
+        if (!this.get(item.ref)) this.addProperty("itemListElement", item);
         return;
     }
     get(ref) {
@@ -451,14 +451,14 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
         else return this.getByItem(ref);
     }
     getByListItem(ref) {
-        let items = this.getProperty("listItemElement").values;
+        let items = this.getProperty("itemListElement").values;
         for (let item of items){
             if (item.record_type == ref["@type"] && item.record_id == ref["@id"]) return item;
         }
         return null;
     }
     getByItem(ref) {
-        let items = this.getProperty("listItemElement").values;
+        let items = this.getProperty("itemListElement").values;
         for (let item of items){
             if (item.item.record_type == ref["@type"] && item.item.record_id == ref["@id"]) return item;
         }

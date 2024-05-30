@@ -82,7 +82,7 @@ export class KrThings extends KrThing {
     
     get itemRecords(){
 
-        let items = this.getProperty('listItemElement').values
+        let items = this.getProperty('itemListElement').values
 
         let results = []
 
@@ -94,7 +94,7 @@ export class KrThings extends KrThing {
     
     get itemFullRecords(){
 
-        let items = this.getProperty('listItemElement').values
+        let items = this.getProperty('itemListElement').values
         
         let results = []
 
@@ -106,7 +106,7 @@ export class KrThings extends KrThing {
 
     get firstItem(){
 
-        let items = this.getProperty('listItemElement').values
+        let items = this.getProperty('itemListElement').values
         
         if (items.length == 0){
             return null
@@ -124,7 +124,7 @@ export class KrThings extends KrThing {
     
     get lastItem(){
 
-        let items = this.getProperty('listItemElement').values
+        let items = this.getProperty('itemListElement').values
         
         if (items.length == 0){
             return null;
@@ -164,7 +164,7 @@ export class KrThings extends KrThing {
 
         // Add to list if not already in it.
         if (!this.get(listItem)){
-            this.addProperty('listItemElement', listItem)
+            this.addProperty('itemListElement', listItem)
         }
         return listItem
     }
@@ -204,7 +204,7 @@ export class KrThings extends KrThing {
         if(n){ n.previousItem = p }
 
         // Remove from list
-        this.deleteProperty('listItemElement', item)
+        this.deleteProperty('itemListElement', item)
 
         // Sets position
         item.position = null;
@@ -244,7 +244,7 @@ export class KrThings extends KrThing {
         
         // Add to list if not already in it.
         if (!this.get(item.ref)){
-            this.addProperty('listItemElement', item)
+            this.addProperty('itemListElement', item)
         }
         
         return
@@ -275,7 +275,7 @@ export class KrThings extends KrThing {
         
         // Add to list if not already in it.
         if (!this.get(item.ref)){
-            this.addProperty('listItemElement', item)
+            this.addProperty('itemListElement', item)
         };
         return; 
     }
@@ -298,7 +298,7 @@ export class KrThings extends KrThing {
 
     getByListItem(ref){
 
-        let items = this.getProperty('listItemElement').values
+        let items = this.getProperty('itemListElement').values
 
         for(let item of items){
 
@@ -312,7 +312,7 @@ export class KrThings extends KrThing {
     
     getByItem(ref){
 
-        let items = this.getProperty('listItemElement').values
+        let items = this.getProperty('itemListElement').values
 
         for(let item of items){
             if(item.item.record_type == ref['@type'] && item.item.record_id == ref['@id']){
