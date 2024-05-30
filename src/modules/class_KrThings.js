@@ -37,6 +37,49 @@ export class KrThings extends KrThing {
         return results
     }
 
+
+    set items(values){
+
+        values = ensureArray(values)
+
+        for(let value in values){
+            this.add(value)
+        }
+
+        return
+        
+    }
+
+
+    get record(){
+
+        return super.record
+    }
+    
+    set record(value){
+
+        if(value.record_type){
+            // Handle thing
+            let properties = value.properties
+            for(p in properties){
+                if (p.propertyID != "itemListElement"){
+                    this._properties.push(p)   
+                }
+            }
+            this.items = value.getProperty('itemListElement')?.values
+            
+        } else {
+            // Handle record
+            for(let k of Object.keys(value)){
+                if(k!="itemListElement"){
+                    this.addProperty(k, value[k])
+                }                
+            }
+            this.items = value?.itemListElement
+        }
+    }
+
+    
     get itemRecords(){
 
         let items = this.getProperty('listItemElement').values
@@ -315,4 +358,14 @@ export class KrThings extends KrThing {
 
   
     
+}
+
+
+
+function ensureArray(value) {
+    if (Array.isArray(value)) {
+        return value;
+    } else {
+        return [value];
+    }
 }

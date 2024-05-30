@@ -70,6 +70,7 @@ class $836e50e45781687c$export$3138a16edeb45799 extends (0, $5OpyM$KrThing) {
     - record:         Returns all metadata in a dict
     - object:         The original source of the data
     - Instrument:     What brought the data over
+    - schema:         Schema object for thing
 
 
     Methods
@@ -228,6 +229,12 @@ class $836e50e45781687c$export$3138a16edeb45799 extends (0, $5OpyM$KrThing) {
         return this.schema.get_heading_image(this.getBestRecord());
     }
 }
+function $836e50e45781687c$var$ensureArray(value) {
+    if (Array.isArray(value)) return value;
+    else return [
+        value
+    ];
+}
 
 
 
@@ -308,6 +315,26 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
         }
         return results;
     }
+    set items(values) {
+        values = $347a3ff9d6941f10$var$ensureArray(values);
+        for(let value in values)this.add(value);
+        return;
+    }
+    get record() {
+        return super.record;
+    }
+    set record(value) {
+        if (value.record_type) {
+            // Handle thing
+            let properties = value.properties;
+            for(p in properties)if (p.propertyID != "itemListElement") this._properties.push(p);
+            this.items = value.getProperty("itemListElement")?.values;
+        } else {
+            // Handle record
+            for (let k of Object.keys(value))if (k != "itemListElement") this.addProperty(k, value[k]);
+            this.items = value?.itemListElement;
+        }
+    }
     get itemRecords() {
         let items = this.getProperty("listItemElement").values;
         let results = [];
@@ -367,12 +394,12 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
     remove(itemRef) {
         var item = this.get(itemRef);
         if (!item) return null;
-        var p = item.previousItem;
+        var p1 = item.previousItem;
         var n = item.nextItem;
-        console.log("item", p, n);
+        console.log("item", p1, n);
         // Ressign before and after links to one another
-        if (p) p.nextItem = n;
-        if (n) n.previousItem = p;
+        if (p1) p1.nextItem = n;
+        if (n) n.previousItem = p1;
         // Remove from list
         this.deleteProperty("listItemElement", item);
         // Sets position
@@ -384,14 +411,14 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
         return;
     }
     insertBefore(ref, itemRef) {
-        var p = null;
+        var p1 = null;
         var item = this.get(itemRef);
         if (!item) return null;
         var n = this.get(ref);
-        if (n) var p = n.previousItem;
-        item.previousItem = p;
+        if (n) var p1 = n.previousItem;
+        item.previousItem = p1;
         item.nextItem = n;
-        if (p) p.nextItem = item;
+        if (p1) p1.nextItem = item;
         if (n) n.previousItem = item;
         // Sets position
         this.reCalculatePosition();
@@ -402,13 +429,13 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
     insertAfter(ref, itemRef) {
         // Retrieve all elements
         var item = this.get(itemRef);
-        var p = item.previousItem;
+        var p1 = item.previousItem;
         var n = null;
-        if (p) n = p.nextItem;
+        if (p1) n = p1.nextItem;
         // Change allocation
-        item.previousItem = p;
+        item.previousItem = p1;
         item.nextItem = n;
-        if (p) p.nextItem = item;
+        if (p1) p1.nextItem = item;
         if (n) n.previousItem = item;
         // Sets position
         this.reCalculatePosition();
@@ -450,6 +477,12 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
         }
         return newThings;
     }
+}
+function $347a3ff9d6941f10$var$ensureArray(value) {
+    if (Array.isArray(value)) return value;
+    else return [
+        value
+    ];
 }
 
 

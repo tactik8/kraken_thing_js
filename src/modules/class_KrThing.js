@@ -25,6 +25,7 @@ export class KrThing extends KrThingRecord {
     - record:         Returns all metadata in a dict
     - object:         The original source of the data
     - Instrument:     What brought the data over
+    - schema:         Schema object for thing
 
 
     Methods
@@ -235,9 +236,15 @@ export class KrThing extends KrThingRecord {
     }
     
 
+}
 
 
 
-    
-   
+
+function ensureArray(value) {
+    if (Array.isArray(value)) {
+        return value;
+    } else {
+        return [value];
+    }
 }
