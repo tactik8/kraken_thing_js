@@ -152,13 +152,15 @@ export class KrThings extends KrThing {
         };
         
         let lastItem = this.lastItem
+       
         
-        if (lastItem){
+        if (lastItem && lastItem != null){
             listItem.position = lastItem.position + 1
             listItem.previousItem = lastItem
             lastItem.nextItem = listItem
             
         } else {
+            
             listItem.position = 0
         }
 
@@ -172,12 +174,15 @@ export class KrThings extends KrThing {
     reCalculatePosition(){
 
         let t = this.firstItem;
+        
         var position = 0;
         
-        while(t){
+        while(t && t != null){
+            
             t.position = position;
             position = position + 1
             t = t.nextItem
+           
         }
     }
 
@@ -189,7 +194,6 @@ export class KrThings extends KrThing {
     remove(itemRef){
 
         var item = this.get(itemRef)
-        
         if(!item){ 
             return null
         }
@@ -197,7 +201,6 @@ export class KrThings extends KrThing {
         var p = item.previousItem
         var n = item.nextItem
 
-        console.log('item', p, n)
      
         // Ressign before and after links to one another
         if(p){ p.nextItem = n }
@@ -214,54 +217,79 @@ export class KrThings extends KrThing {
         item.previousItem = null
         item.nextItem = null
 
-        
        
         return
         
     }
 
     
-    insertBefore(ref, itemRef){
+    insertBefore(referenceItem, refItemtoInsert){
 
-        var p = null
-        var item = this.get(itemRef)
-        if(!item){ return null}
-        
-        var n = this.get(ref)
-        
-        if(n){
-            var p = n.previousItem
+        // Convert to ListItem if not one already
+        if((refItemtoInsert?.record_type || null) != "ListItem"){
+            refItemtoInsert = this.add(refItemtoInsert)
         }
-        
-        item.previousItem = p
-        item.nextItem = n
 
-        if(p){ p.nextItem = item }
-        if(n){ n.previousItem = item }
+        // Retrieve latest ListItem record
+        let item = this.get(refItemtoInsert.ref)
+
+        // Add if not present
+        if (!item || item == null){
+            item = this.add(refItemtoInsert)
+        };
+
+
+        // Remove previous links of items
+        this.remove(item.ref)
+
+        var n = this.get(referenceItem)
+
+
+        var p = p.previousItem
+
+        // Change allocation
+        item.previousItem = p;
+        item.nextItem = n;
+
+        if(p){ p.nextItem = item;};
+        if(n){ n.previousItem = item; };
+
+
+        this.addProperty('itemListElement', item)
 
         // Sets position
         this.reCalculatePosition();
-        
-        // Add to list if not already in it.
-        if (!this.get(item.ref)){
-            this.addProperty('itemListElement', item)
-        }
-        
-        return
+
+        return; 
     }
     
     
-    insertAfter(ref, itemRef){
+    insertAfter(referenceItem, refItemtoInsert){
+        /**
+         * 
+         */
 
-        // Retrieve all elements
-
-        var item = this.get(itemRef)
-        var p = item.previousItem
-        var n = null;
-        
-        if(p){
-            n = p.nextItem
+        // Convert to ListItem if not one already
+        if((refItemtoInsert?.record_type || null) != "ListItem"){
+            refItemtoInsert = this.add(refItemtoInsert)
         }
+
+        // Retrieve latest ListItem record
+        let item = this.get(refItemtoInsert.ref)
+
+        // Add if not present
+        if (!item || item == null){
+            item = this.add(refItemtoInsert)
+        };
+
+
+        // Remove previous links of items
+        this.remove(item.ref)
+
+        var p = this.get(referenceItem)
+        
+        
+        var n = p.nextItem
         
         // Change allocation
         item.previousItem = p;
@@ -270,13 +298,14 @@ export class KrThings extends KrThing {
         if(p){ p.nextItem = item;};
         if(n){ n.previousItem = item; };
 
+
+        this.addProperty('itemListElement', item)
+        
         // Sets position
+        
         this.reCalculatePosition();
         
-        // Add to list if not already in it.
-        if (!this.get(item.ref)){
-            this.addProperty('itemListElement', item)
-        };
+        
         return; 
     }
 
@@ -288,7 +317,8 @@ export class KrThings extends KrThing {
         
         if (!ref || !ref['@type']){ return null};
 
-        if (ref['@type'] == 'listItem'){
+        
+        if (ref['@type'] == 'ListItem'){
             return this.getByListItem(ref);
         } else {
             return this.getByItem(ref);
@@ -312,8 +342,8 @@ export class KrThings extends KrThing {
     
     getByItem(ref){
 
+        
         let items = this.getProperty('itemListElement').values
-
         for(let item of items){
             if(item.item.record_type == ref['@type'] && item.item.record_id == ref['@id']){
                 return item

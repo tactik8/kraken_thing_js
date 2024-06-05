@@ -370,7 +370,7 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
         }
         if (!(listItem instanceof (0, $14fcc60f5820458e$export$f22625b8b2b04e84))) listItem = new (0, $14fcc60f5820458e$export$f22625b8b2b04e84)(listItem, itemId);
         let lastItem = this.lastItem;
-        if (lastItem) {
+        if (lastItem && lastItem != null) {
             listItem.position = lastItem.position + 1;
             listItem.previousItem = lastItem;
             lastItem.nextItem = listItem;
@@ -382,7 +382,7 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
     reCalculatePosition() {
         let t = this.firstItem;
         var position = 0;
-        while(t){
+        while(t && t != null){
             t.position = position;
             position = position + 1;
             t = t.nextItem;
@@ -396,7 +396,6 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
         if (!item) return null;
         var p1 = item.previousItem;
         var n = item.nextItem;
-        console.log("item", p1, n);
         // Ressign before and after links to one another
         if (p1) p1.nextItem = n;
         if (n) n.previousItem = p1;
@@ -410,44 +409,55 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
         item.nextItem = null;
         return;
     }
-    insertBefore(ref, itemRef) {
-        var p1 = null;
-        var item = this.get(itemRef);
-        if (!item) return null;
-        var n = this.get(ref);
-        if (n) var p1 = n.previousItem;
-        item.previousItem = p1;
-        item.nextItem = n;
-        if (p1) p1.nextItem = item;
-        if (n) n.previousItem = item;
-        // Sets position
-        this.reCalculatePosition();
-        // Add to list if not already in it.
-        if (!this.get(item.ref)) this.addProperty("itemListElement", item);
-        return;
-    }
-    insertAfter(ref, itemRef) {
-        // Retrieve all elements
-        var item = this.get(itemRef);
-        var p1 = item.previousItem;
-        var n = null;
-        if (p1) n = p1.nextItem;
+    insertBefore(referenceItem, refItemtoInsert) {
+        // Convert to ListItem if not one already
+        if ((refItemtoInsert?.record_type || null) != "ListItem") refItemtoInsert = this.add(refItemtoInsert);
+        // Retrieve latest ListItem record
+        let item = this.get(refItemtoInsert.ref);
+        // Add if not present
+        if (!item || item == null) item = this.add(refItemtoInsert);
+        // Remove previous links of items
+        this.remove(item.ref);
+        var n = this.get(referenceItem);
+        var p1 = p1.previousItem;
         // Change allocation
         item.previousItem = p1;
         item.nextItem = n;
         if (p1) p1.nextItem = item;
         if (n) n.previousItem = item;
+        this.addProperty("itemListElement", item);
         // Sets position
         this.reCalculatePosition();
-        // Add to list if not already in it.
-        if (!this.get(item.ref)) this.addProperty("itemListElement", item);
+        return;
+    }
+    insertAfter(referenceItem, refItemtoInsert) {
+        /**
+         * 
+         */ // Convert to ListItem if not one already
+        if ((refItemtoInsert?.record_type || null) != "ListItem") refItemtoInsert = this.add(refItemtoInsert);
+        // Retrieve latest ListItem record
+        let item = this.get(refItemtoInsert.ref);
+        // Add if not present
+        if (!item || item == null) item = this.add(refItemtoInsert);
+        // Remove previous links of items
+        this.remove(item.ref);
+        var p1 = this.get(referenceItem);
+        var n = p1.nextItem;
+        // Change allocation
+        item.previousItem = p1;
+        item.nextItem = n;
+        if (p1) p1.nextItem = item;
+        if (n) n.previousItem = item;
+        this.addProperty("itemListElement", item);
+        // Sets position
+        this.reCalculatePosition();
         return;
     }
     get(ref) {
         if (!ref) return null;
         if (ref && ref.ref) ref = ref.ref;
         if (!ref || !ref["@type"]) return null;
-        if (ref["@type"] == "listItem") return this.getByListItem(ref);
+        if (ref["@type"] == "ListItem") return this.getByListItem(ref);
         else return this.getByItem(ref);
     }
     getByListItem(ref) {
