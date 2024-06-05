@@ -260,7 +260,7 @@ export class KrThings extends KrThing {
         // Sets position
         this.reCalculatePosition();
 
-        return; 
+        return item
     }
     
     
@@ -306,7 +306,7 @@ export class KrThings extends KrThing {
         this.reCalculatePosition();
         
         
-        return; 
+        return item
     }
 
     get(ref){

@@ -428,7 +428,7 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
         this.addProperty("itemListElement", item);
         // Sets position
         this.reCalculatePosition();
-        return;
+        return item;
     }
     insertAfter(referenceItem, refItemtoInsert) {
         /**
@@ -451,7 +451,7 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
         this.addProperty("itemListElement", item);
         // Sets position
         this.reCalculatePosition();
-        return;
+        return item;
     }
     get(ref) {
         if (!ref) return null;
