@@ -20,8 +20,8 @@ export class KrListItem extends KrThing {
 
     constructor(item, record_id) {
         super('ListItem', record_id);
-        this.setProperty('item', item);
-        if(!record_id){this.setProperty('@id', String(crypto.randomUUID()))}
+        this.replaceProperty('item', null, item);
+        if(!record_id){this.replaceProperty('@id', null, String(crypto.randomUUID()))}
     }
 
 
@@ -32,7 +32,7 @@ export class KrListItem extends KrThing {
         return null;
     }
     set item(value){
-        this.setProperty('item', value);
+        this.replaceProperty('item', null, value);
     }
 
     get previousItem(){
@@ -43,7 +43,7 @@ export class KrListItem extends KrThing {
     }
     set previousItem(value){
         //if(value && value.ref){ value = value.ref};
-        this.setProperty('previousItem', value);
+        this.replaceProperty('previousItem', null, value);
     }
     get nextItem(){
         if(this.getProperty('nextItem')){
@@ -55,7 +55,7 @@ export class KrListItem extends KrThing {
     set nextItem(value){
 
         //if(value && value.ref){ value = value.ref};
-        this.setProperty('nextItem', value);
+        this.replaceProperty('nextItem', null, value);
     }
 
     get position(){
@@ -65,7 +65,7 @@ export class KrListItem extends KrThing {
         return null;
     }
     set position(value){
-        this.setProperty('position', value);
+        this.replaceProperty('position', null, value);
     }
   
 }
