@@ -91,6 +91,11 @@ function test1(){
     for(let item of items){
         console.log(item.position, item.item.record_id)
     }
+
+
+
+    
+    
     
 }
 
