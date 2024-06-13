@@ -446,7 +446,7 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
         item.previousItem = p1;
         item.nextItem = n;
         if (p1) p1.nextItem = item;
-        else n.nextItem = null;
+        else p1.nextItem = null;
         if (n) n.previousItem = item;
         else n.previousItem = null;
         this.addProperty("itemListElement", item);
@@ -471,7 +471,7 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
         item.previousItem = p1;
         item.nextItem = n;
         if (p1) p1.nextItem = item;
-        else n.nextItem = null;
+        else p1.nextItem = null;
         if (n) n.previousItem = item;
         else n.previousItem = null;
         this.addProperty("itemListElement", item);
