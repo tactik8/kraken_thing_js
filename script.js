@@ -90,8 +90,7 @@ function test1() {
     things.record = record;
     console.log(JSON.stringify(things.record, null, 4));
 
-    console.log("zz", things.record_type, things.record_id);
-
+   
     let refItem = { "@type": "ListItem", "@id": "ListItem2" };
 
     let newItem = {
@@ -108,7 +107,7 @@ function test1() {
 
     things.insertAfter(refItem, newItem);
 
-    console.log(things.getProperty("itemListElement").values);
+    console.log(JSON.stringify(things.record, null, 4));
 }
 
 

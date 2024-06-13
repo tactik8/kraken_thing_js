@@ -263,8 +263,8 @@ export class KrThings extends KrThing {
         item.previousItem = p;
         item.nextItem = n;
 
-        if(p){ p.nextItem = item;};
-        if(n){ n.previousItem = item; };
+        if(p){ p.nextItem = item;} else { n.nextItem = null};
+        if(n){ n.previousItem = item; } else { n.previousItem = null};
 
 
         this.addProperty('itemListElement', item)
@@ -306,8 +306,8 @@ export class KrThings extends KrThing {
         item.previousItem = p;
         item.nextItem = n;
 
-        if(p){ p.nextItem = item;};
-        if(n){ n.previousItem = item; };
+        if(p){ p.nextItem = item;} else { n.nextItem = null};
+        if(n){ n.previousItem = item; } else { n.previousItem = null};
 
 
         this.addProperty('itemListElement', item)
