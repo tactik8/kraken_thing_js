@@ -238,9 +238,12 @@ export class KrThings extends KrThing {
     insertBefore(referenceItem, refItemtoInsert){
 
         // Convert to ListItem if not one already
-        if((refItemtoInsert?.record_type || null) != "ListItem"){
-            refItemtoInsert = this.add(refItemtoInsert)
-        }
+        
+        if(!(refItemtoInsert instanceof KrListItem)){
+            refItemtoInsert = new KrListItem(refItemtoInsert);
+        };
+            
+        
 
         // Retrieve latest ListItem record
         let item = this.get(refItemtoInsert.ref)
@@ -282,9 +285,9 @@ export class KrThings extends KrThing {
          */
 
         // Convert to ListItem if not one already
-        if((refItemtoInsert?.record_type || null) != "ListItem"){
-            refItemtoInsert = this.add(refItemtoInsert)
-        }
+        if(!(refItemtoInsert instanceof KrListItem)){
+            refItemtoInsert = new KrListItem(refItemtoInsert);
+        };
 
         // Retrieve latest ListItem record
         let item = this.get(refItemtoInsert.ref)

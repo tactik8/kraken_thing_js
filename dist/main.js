@@ -433,7 +433,7 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
     }
     insertBefore(referenceItem, refItemtoInsert) {
         // Convert to ListItem if not one already
-        if ((refItemtoInsert?.record_type || null) != "ListItem") refItemtoInsert = this.add(refItemtoInsert);
+        if (!(refItemtoInsert instanceof (0, $14fcc60f5820458e$export$f22625b8b2b04e84))) refItemtoInsert = new (0, $14fcc60f5820458e$export$f22625b8b2b04e84)(refItemtoInsert);
         // Retrieve latest ListItem record
         let item = this.get(refItemtoInsert.ref);
         // Add if not present
@@ -458,7 +458,7 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
         /**
          * 
          */ // Convert to ListItem if not one already
-        if ((refItemtoInsert?.record_type || null) != "ListItem") refItemtoInsert = this.add(refItemtoInsert);
+        if (!(refItemtoInsert instanceof (0, $14fcc60f5820458e$export$f22625b8b2b04e84))) refItemtoInsert = new (0, $14fcc60f5820458e$export$f22625b8b2b04e84)(refItemtoInsert);
         // Retrieve latest ListItem record
         let item = this.get(refItemtoInsert.ref);
         // Add if not present

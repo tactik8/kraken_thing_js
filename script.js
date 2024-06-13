@@ -108,6 +108,20 @@ function test1() {
     things.insertAfter(refItem, newItem);
 
     console.log(JSON.stringify(things.record, null, 4));
+
+
+    let newItem2 = {
+            "@type": "Thing",
+            "@id": "Thing5",
+            name: "Thing5",
+            url: "https://www.test.com/thing5"
+        }
+    things.insertAfter(refItem, newItem2);
+
+    console.log(JSON.stringify(things.record, null, 4));
+    
+
+    
 }
 
 
