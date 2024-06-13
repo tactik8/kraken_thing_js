@@ -250,40 +250,45 @@ export class KrThings extends KrThing {
     
     insertBefore(referenceItem, refItemtoInsert){
 
+        let item 
         // Convert to ListItem if not one already
-        
         if(!(refItemtoInsert instanceof KrListItem)){
             refItemtoInsert = new KrListItem(refItemtoInsert);
-        };
+             item = refItemtoInsert
+        } else {
+             item = this.get(refItemtoInsert.ref)
+        }
+
             
-        
-
         // Retrieve latest ListItem record
-        let item = this.get(refItemtoInsert.ref)
-
-        // Add if not present
-        if (!item || item == null){
-            item = this.add(refItemtoInsert)
-        };
-
-
-        // Remove previous links of items
-        this.remove(item.ref)
-
+  
         var n = this.get(referenceItem)
-
-
         var p = p.previousItem
 
+        // Stop events
+        this.blockEvents()
+        if(item){ item.blockEvents() }
+        if(p){ p.blockEvents() }
+        if(n){ n.blockEvents() }
+        
+        // Remove previous links of items
+        if((item.previousItem && item.previousItem != null) || (item.nextItem && item.nextItem != null)){
+            this.remove(item.ref)
+        }
+
+        
         // Change allocation
         item.previousItem = p;
         item.nextItem = n;
 
-        if(p){ p.nextItem = item;} else { p.nextItem = null};
+        if(p){ p.nextItem = item;} else { p.nextItem = null };
         if(n){ n.previousItem = item; } else { n.previousItem = null};
 
-
-        this.addProperty('itemListElement', item)
+        // Start events
+        this.allowEvents()
+        if(item){ item.allowEvents() }
+        if(p){ p.allowEvents() }
+        if(n){ n.allowEvents() }
 
         // Sets position
         let position = 0
@@ -297,6 +302,12 @@ export class KrThings extends KrThing {
             nextItem = nextItem.nextItem
         }
 
+        //  Add to list
+        let t = this.get(refItemtoInsert.ref)
+        if(!t || t== null){
+            this.addProperty('itemListElement', refItemtoInsert)
+        }
+        
         return item
     }
     
@@ -306,20 +317,24 @@ export class KrThings extends KrThing {
          * 
          */
 
+       let item
         // Convert to ListItem if not one already
         if(!(refItemtoInsert instanceof KrListItem)){
             refItemtoInsert = new KrListItem(refItemtoInsert);
-        };
-
-        // Retrieve latest ListItem record
-        let item = this.get(refItemtoInsert.ref)
-
-        // Add if not present
-        if (!item || item == null){
-            item = this.add(refItemtoInsert)
-        };
+             item = refItemtoInsert
+        } else {
+             item = this.get(refItemtoInsert.ref)
+        }
 
 
+        // Stop events
+        this.blockEvents()
+        if(item){ item.blockEvents() }
+        if(p){ p.blockEvents() }
+        if(n){ n.blockEvents() }
+
+
+        
         // Remove previous links of items
         if((item.previousItem && item.previousItem != null) || (item.nextItem && item.nextItem != null)){
             this.remove(item.ref)
@@ -327,7 +342,6 @@ export class KrThings extends KrThing {
        
 
         var p = this.get(referenceItem)
-        
         var n = p.nextItem
         
         // Change allocation
@@ -338,6 +352,12 @@ export class KrThings extends KrThing {
         if(n){ n.previousItem = item; } else { n.previousItem = null};
 
 
+        // Start events
+        this.allowEvents()
+        if(item){ item.allowEvents() }
+        if(p){ p.allowEvents() }
+        if(n){ n.allowEvents() }
+        
         // Change position
         let position = 0
         if(p){ position = p.position + 1}
@@ -350,13 +370,12 @@ export class KrThings extends KrThing {
             nextItem = nextItem.nextItem
         }
 
-        
-        this.addProperty('itemListElement', item)
-        
-        // Sets position
-        
-        //this.reCalculatePosition();
-        
+        //  Add to list
+        let t = this.get(refItemtoInsert.ref)
+        if(!t || t== null){
+            this.addProperty('itemListElement', refItemtoInsert)
+        }
+
         
         return item
     }

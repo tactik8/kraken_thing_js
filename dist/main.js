@@ -439,16 +439,22 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
         return;
     }
     insertBefore(referenceItem, refItemtoInsert) {
+        let item;
         // Convert to ListItem if not one already
-        if (!(refItemtoInsert instanceof (0, $14fcc60f5820458e$export$f22625b8b2b04e84))) refItemtoInsert = new (0, $14fcc60f5820458e$export$f22625b8b2b04e84)(refItemtoInsert);
+        if (!(refItemtoInsert instanceof (0, $14fcc60f5820458e$export$f22625b8b2b04e84))) {
+            refItemtoInsert = new (0, $14fcc60f5820458e$export$f22625b8b2b04e84)(refItemtoInsert);
+            item = refItemtoInsert;
+        } else item = this.get(refItemtoInsert.ref);
         // Retrieve latest ListItem record
-        let item = this.get(refItemtoInsert.ref);
-        // Add if not present
-        if (!item || item == null) item = this.add(refItemtoInsert);
-        // Remove previous links of items
-        this.remove(item.ref);
         var n = this.get(referenceItem);
         var p1 = p1.previousItem;
+        // Stop events
+        this.blockEvents();
+        if (item) item.blockEvents();
+        if (p1) p1.blockEvents();
+        if (n) n.blockEvents();
+        // Remove previous links of items
+        if (item.previousItem && item.previousItem != null || item.nextItem && item.nextItem != null) this.remove(item.ref);
         // Change allocation
         item.previousItem = p1;
         item.nextItem = n;
@@ -456,7 +462,11 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
         else p1.nextItem = null;
         if (n) n.previousItem = item;
         else n.previousItem = null;
-        this.addProperty("itemListElement", item);
+        // Start events
+        this.allowEvents();
+        if (item) item.allowEvents();
+        if (p1) p1.allowEvents();
+        if (n) n.allowEvents();
         // Sets position
         let position = 0;
         if (p1) position = p1.position + 1;
@@ -467,17 +477,25 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
             position = position + 1;
             nextItem = nextItem.nextItem;
         }
+        //  Add to list
+        let t = this.get(refItemtoInsert.ref);
+        if (!t || t == null) this.addProperty("itemListElement", refItemtoInsert);
         return item;
     }
     insertAfter(referenceItem, refItemtoInsert) {
         /**
          * 
-         */ // Convert to ListItem if not one already
-        if (!(refItemtoInsert instanceof (0, $14fcc60f5820458e$export$f22625b8b2b04e84))) refItemtoInsert = new (0, $14fcc60f5820458e$export$f22625b8b2b04e84)(refItemtoInsert);
-        // Retrieve latest ListItem record
-        let item = this.get(refItemtoInsert.ref);
-        // Add if not present
-        if (!item || item == null) item = this.add(refItemtoInsert);
+         */ let item;
+        // Convert to ListItem if not one already
+        if (!(refItemtoInsert instanceof (0, $14fcc60f5820458e$export$f22625b8b2b04e84))) {
+            refItemtoInsert = new (0, $14fcc60f5820458e$export$f22625b8b2b04e84)(refItemtoInsert);
+            item = refItemtoInsert;
+        } else item = this.get(refItemtoInsert.ref);
+        // Stop events
+        this.blockEvents();
+        if (item) item.blockEvents();
+        if (p1) p1.blockEvents();
+        if (n) n.blockEvents();
         // Remove previous links of items
         if (item.previousItem && item.previousItem != null || item.nextItem && item.nextItem != null) this.remove(item.ref);
         var p1 = this.get(referenceItem);
@@ -489,6 +507,11 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
         else p1.nextItem = null;
         if (n) n.previousItem = item;
         else n.previousItem = null;
+        // Start events
+        this.allowEvents();
+        if (item) item.allowEvents();
+        if (p1) p1.allowEvents();
+        if (n) n.allowEvents();
         // Change position
         let position = 0;
         if (p1) position = p1.position + 1;
@@ -499,9 +522,9 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
             position = position + 1;
             nextItem = nextItem.nextItem;
         }
-        this.addProperty("itemListElement", item);
-        // Sets position
-        //this.reCalculatePosition();
+        //  Add to list
+        let t = this.get(refItemtoInsert.ref);
+        if (!t || t == null) this.addProperty("itemListElement", refItemtoInsert);
         return item;
     }
     get(ref) {
