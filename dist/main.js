@@ -464,7 +464,8 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
         // Add if not present
         if (!item || item == null) item = this.add(refItemtoInsert);
         // Remove previous links of items
-        this.remove(item.ref);
+        if (item.previousItem && item.previousItem != null) this.remove(item.ref);
+        if (item.nextItem && item.nextItem != null) this.remove(item.ref);
         var p1 = this.get(referenceItem);
         var n = p1.nextItem;
         // Change allocation

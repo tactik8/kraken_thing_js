@@ -299,7 +299,12 @@ export class KrThings extends KrThing {
 
 
         // Remove previous links of items
-        this.remove(item.ref)
+        if(item.previousItem && item.previousItem != null){
+            this.remove(item.ref)
+        }
+        if(item.nextItem && item.nextItem != null){
+            this.remove(item.ref)
+        }
 
         var p = this.get(referenceItem)
         
