@@ -28,7 +28,7 @@ export class KrThings extends KrThing {
 
         let results = [];
         let t = this.firstItem
-
+        
         while(t && t != null){
             results.push(t)
             t = t.nextItem
@@ -42,6 +42,15 @@ export class KrThings extends KrThing {
 
         values = ensureArray(values)
 
+        // Sort values
+        function compare(a, b) {
+            if(a.position < b.position ){ return -1 };
+            if(a.position > b.position ){ return 1 };
+            return 0;
+        };
+
+        values.sort(compare);
+        
         for(let value of values){
             this.add(value)
         }
@@ -138,7 +147,7 @@ export class KrThings extends KrThing {
         
     }
     
-    add(listItem, itemId){
+    add(listItem){
 
         if(Array.isArray(listItem)){
             for(let l of listItem){
@@ -148,20 +157,23 @@ export class KrThings extends KrThing {
         }
         
         if(!(listItem instanceof KrListItem)){
-            listItem = new KrListItem(listItem, itemId);
+            listItem = new KrListItem(listItem);
         };
         
         let lastItem = this.lastItem
-       
         
         if (lastItem && lastItem != null){
             listItem.position = lastItem.position + 1
             listItem.previousItem = lastItem
+            listItem.nextItem = null
             lastItem.nextItem = listItem
             
         } else {
             
             listItem.position = 0
+            listItem.previousItem = null
+            listItem.nextItem = null
+            
         }
 
         // Add to list if not already in it.
@@ -286,9 +298,7 @@ export class KrThings extends KrThing {
         // Remove previous links of items
         this.remove(item.ref)
 
-        console.log(referenceItem)
         var p = this.get(referenceItem)
-        console.log(p)
         
         var n = p.nextItem
         

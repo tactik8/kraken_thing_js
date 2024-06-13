@@ -20,8 +20,19 @@ export class KrListItem extends KrThing {
 
     constructor(item, record_id) {
         super('ListItem', record_id);
-        this.replaceProperty('item', null, item);
-        if(!record_id){this.replaceProperty('@id', null, String(crypto.randomUUID()))}
+        if(item && item != null){
+            if(item?.['@type'] == "ListItem"){
+                this.record = item
+            }
+            else if(item?.['record_type'] == "ListItem"){
+                this.thing = item
+            } else {
+                this.replaceProperty('item', null, item);
+            }
+            
+        }
+        
+        //if(!record_id){this.replaceProperty('@id', null, String(crypto.randomUUID()))}
     }
 
 

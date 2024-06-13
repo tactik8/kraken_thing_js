@@ -94,50 +94,56 @@ class $836e50e45781687c$export$3138a16edeb45799 extends (0, $5OpyM$KrThing) {
         return this.getProperty("actionStatus").value;
     }
     set actionStatus(value) {
-        return this.setProperty("actionStatus", value);
+        return this.replaceProperty("actionStatus", null, value);
     }
     get endTime() {
         return this.getProperty("endTime").value;
     }
     set endTime(value) {
-        return this.setProperty("endTime", value);
+        return this.replaceProperty("endTime", null, value);
     }
     get error() {
         return this.getProperty("error").value;
     }
     set error(value) {
-        return this.setProperty("error", value);
+        return this.replaceProperty("error", null, value);
     }
     get familyName() {
         return this.getProperty("familyName").value;
     }
     set familyName(value) {
-        return this.setProperty("familyName", value);
+        return this.replaceProperty("familyName", null, value);
     }
     get givenName() {
         return this.getProperty("givenName").value;
     }
     set givenName(value) {
-        return this.setProperty("givenName", value);
+        return this.replaceProperty("givenName", null, value);
     }
     get name() {
         if (this.getProperty("name")) return this.getProperty("name").value;
         return null;
     }
     set name(value) {
-        return this.setProperty("name", value);
+        return this.replaceProperty("name", null, value);
     }
     get startTime() {
         return this.getProperty("startTime").value;
     }
     set startTime(value) {
-        return this.setProperty("startTime", value);
+        return this.replaceProperty("startTime", null, value);
     }
     get url() {
         return this.getProperty("url").value;
     }
     set url(value) {
-        return this.setProperty("url", value);
+        return this.replaceProperty("url", null, value);
+    }
+    get position() {
+        return this.getProperty("position").value;
+    }
+    set position(value) {
+        return this.replaceProperty("position", null, value);
     }
     // ----------------
     get agent() {
@@ -254,8 +260,12 @@ class $14fcc60f5820458e$export$f22625b8b2b04e84 extends (0, $836e50e45781687c$ex
 
     */ constructor(item, record_id){
         super("ListItem", record_id);
-        this.replaceProperty("item", null, item);
-        if (!record_id) this.replaceProperty("@id", null, String(crypto.randomUUID()));
+        if (item && item != null) {
+            if (item?.["@type"] == "ListItem") this.record = item;
+            else if (item?.["record_type"] == "ListItem") this.thing = item;
+            else this.replaceProperty("item", null, item);
+        }
+    //if(!record_id){this.replaceProperty('@id', null, String(crypto.randomUUID()))}
     }
     get item() {
         if (this.getProperty("item")) return this.getProperty("item").value;
@@ -317,6 +327,13 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
     }
     set items(values) {
         values = $347a3ff9d6941f10$var$ensureArray(values);
+        // Sort values
+        function compare(a, b) {
+            if (a.position < b.position) return -1;
+            if (a.position > b.position) return 1;
+            return 0;
+        }
+        values.sort(compare);
         for (let value of values)this.add(value);
         return;
     }
@@ -363,18 +380,23 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
         }
         return null;
     }
-    add(listItem, itemId) {
+    add(listItem) {
         if (Array.isArray(listItem)) {
             for (let l of listItem)this.add(l);
             return;
         }
-        if (!(listItem instanceof (0, $14fcc60f5820458e$export$f22625b8b2b04e84))) listItem = new (0, $14fcc60f5820458e$export$f22625b8b2b04e84)(listItem, itemId);
+        if (!(listItem instanceof (0, $14fcc60f5820458e$export$f22625b8b2b04e84))) listItem = new (0, $14fcc60f5820458e$export$f22625b8b2b04e84)(listItem);
         let lastItem = this.lastItem;
         if (lastItem && lastItem != null) {
             listItem.position = lastItem.position + 1;
             listItem.previousItem = lastItem;
+            listItem.nextItem = null;
             lastItem.nextItem = listItem;
-        } else listItem.position = 0;
+        } else {
+            listItem.position = 0;
+            listItem.previousItem = null;
+            listItem.nextItem = null;
+        }
         // Add to list if not already in it.
         if (!this.get(listItem)) this.addProperty("itemListElement", listItem);
         return listItem;
@@ -441,9 +463,7 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
         if (!item || item == null) item = this.add(refItemtoInsert);
         // Remove previous links of items
         this.remove(item.ref);
-        console.log(referenceItem);
         var p1 = this.get(referenceItem);
-        console.log(p1);
         var n = p1.nextItem;
         // Change allocation
         item.previousItem = p1;

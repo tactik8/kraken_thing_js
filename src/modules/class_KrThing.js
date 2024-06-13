@@ -61,35 +61,35 @@ export class KrThing extends KrThingRecord {
         return this.getProperty('actionStatus').value;
     }
     set actionStatus(value){
-        return this.setProperty('actionStatus',value);
+        return this.replaceProperty('actionStatus', null, value);
     }
     
     get endTime(){
         return this.getProperty('endTime').value;
     }
     set endTime(value){
-        return this.setProperty('endTime',value);
+        return this.replaceProperty('endTime', null, value);
     }
 
     get error(){
         return this.getProperty('error').value;
     }
     set error(value){
-        return this.setProperty('error',value);
+        return this.replaceProperty('error', null, value);
     }
     
     get familyName(){
         return this.getProperty('familyName').value;
     }
     set familyName(value){
-        return this.setProperty('familyName',value);
+        return this.replaceProperty('familyName', null, value);
     }
     
     get givenName(){
         return this.getProperty('givenName').value;
     }
     set givenName(value){
-        return this.setProperty('givenName',value);
+        return this.replaceProperty('givenName', null, value);
     }
     
     get name(){
@@ -99,23 +99,31 @@ export class KrThing extends KrThingRecord {
         return null;
     }
     set name(value){
-        return this.setProperty('name', value);
+        return this.replaceProperty('name', null,  value);
     }
 
     get startTime(){
         return this.getProperty('startTime').value;
     }
     set startTime(value){
-        return this.setProperty('startTime',value);
+        return this.replaceProperty('startTime', null, value);
     }
 
     get url(){
         return this.getProperty('url').value;
     }
     set url(value){
-        return this.setProperty('url',value);
+        return this.replaceProperty('url', null, value);
     }
 
+    get position(){
+        return this.getProperty('position').value;
+    }
+    set position(value){
+        return this.replaceProperty('position', null, value);
+    }
+
+    
     // ----------------
     
     get agent(){
