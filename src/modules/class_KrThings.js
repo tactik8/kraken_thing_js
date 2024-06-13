@@ -185,6 +185,7 @@ export class KrThings extends KrThing {
 
     reCalculatePosition(){
 
+        return
         let t = this.firstItem;
         
         var position = 0;
@@ -223,7 +224,19 @@ export class KrThings extends KrThing {
 
         // Sets position
         item.position = null;
-        this.reCalculatePosition()
+
+        // Sets position
+        let position = 0
+        if(n){ position = n.position - 1; n.position = position}
+        
+        let nextItem = n?.nextItem
+        while(nextItem){
+            nextItem.position = position + 1
+            position = position + 1
+            nextItem = nextItem.nextItem
+        }
+        
+        //this.reCalculatePosition()
 
         // Remove links
         item.previousItem = null
@@ -273,7 +286,16 @@ export class KrThings extends KrThing {
         this.addProperty('itemListElement', item)
 
         // Sets position
-        this.reCalculatePosition();
+        let position = 0
+        if(p){ position = p.position + 1}
+
+        item.position = position
+        let nextItem = item.nextItem
+        while(nextItem){
+            nextItem.position = position + 1
+            position = position + 1
+            nextItem = nextItem.nextItem
+        }
 
         return item
     }
@@ -299,12 +321,10 @@ export class KrThings extends KrThing {
 
 
         // Remove previous links of items
-        if(item.previousItem && item.previousItem != null){
+        if((item.previousItem && item.previousItem != null) || (item.nextItem && item.nextItem != null)){
             this.remove(item.ref)
         }
-        if(item.nextItem && item.nextItem != null){
-            this.remove(item.ref)
-        }
+       
 
         var p = this.get(referenceItem)
         
@@ -318,11 +338,24 @@ export class KrThings extends KrThing {
         if(n){ n.previousItem = item; } else { n.previousItem = null};
 
 
+        // Change position
+        let position = 0
+        if(p){ position = p.position + 1}
+
+        item.position = position
+        let nextItem = item.nextItem
+        while(nextItem){
+            nextItem.position = position + 1
+            position = position + 1
+            nextItem = nextItem.nextItem
+        }
+
+        
         this.addProperty('itemListElement', item)
         
         // Sets position
         
-        this.reCalculatePosition();
+        //this.reCalculatePosition();
         
         
         return item

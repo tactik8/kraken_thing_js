@@ -402,13 +402,8 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
         return listItem;
     }
     reCalculatePosition() {
-        let t = this.firstItem;
-        var position = 0;
-        while(t && t != null){
-            t.position = position;
-            position = position + 1;
-            t = t.nextItem;
-        }
+        var position;
+        return;
     }
     // -----------------------------------------------------
     //  CRUD for items 
@@ -425,7 +420,19 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
         this.deleteProperty("itemListElement", item);
         // Sets position
         item.position = null;
-        this.reCalculatePosition();
+        // Sets position
+        let position = 0;
+        if (n) {
+            position = n.position - 1;
+            n.position = position;
+        }
+        let nextItem = n?.nextItem;
+        while(nextItem){
+            nextItem.position = position + 1;
+            position = position + 1;
+            nextItem = nextItem.nextItem;
+        }
+        //this.reCalculatePosition()
         // Remove links
         item.previousItem = null;
         item.nextItem = null;
@@ -451,7 +458,15 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
         else n.previousItem = null;
         this.addProperty("itemListElement", item);
         // Sets position
-        this.reCalculatePosition();
+        let position = 0;
+        if (p1) position = p1.position + 1;
+        item.position = position;
+        let nextItem = item.nextItem;
+        while(nextItem){
+            nextItem.position = position + 1;
+            position = position + 1;
+            nextItem = nextItem.nextItem;
+        }
         return item;
     }
     insertAfter(referenceItem, refItemtoInsert) {
@@ -464,8 +479,7 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
         // Add if not present
         if (!item || item == null) item = this.add(refItemtoInsert);
         // Remove previous links of items
-        if (item.previousItem && item.previousItem != null) this.remove(item.ref);
-        if (item.nextItem && item.nextItem != null) this.remove(item.ref);
+        if (item.previousItem && item.previousItem != null || item.nextItem && item.nextItem != null) this.remove(item.ref);
         var p1 = this.get(referenceItem);
         var n = p1.nextItem;
         // Change allocation
@@ -475,9 +489,19 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
         else p1.nextItem = null;
         if (n) n.previousItem = item;
         else n.previousItem = null;
+        // Change position
+        let position = 0;
+        if (p1) position = p1.position + 1;
+        item.position = position;
+        let nextItem = item.nextItem;
+        while(nextItem){
+            nextItem.position = position + 1;
+            position = position + 1;
+            nextItem = nextItem.nextItem;
+        }
         this.addProperty("itemListElement", item);
         // Sets position
-        this.reCalculatePosition();
+        //this.reCalculatePosition();
         return item;
     }
     get(ref) {
