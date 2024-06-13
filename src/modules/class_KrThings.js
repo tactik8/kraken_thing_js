@@ -263,7 +263,7 @@ export class KrThings extends KrThing {
         item.previousItem = p;
         item.nextItem = n;
 
-        if(p){ p.nextItem = item;} else { n.nextItem = null};
+        if(p){ p.nextItem = item;} else { p.nextItem = null};
         if(n){ n.previousItem = item; } else { n.previousItem = null};
 
 
@@ -306,7 +306,7 @@ export class KrThings extends KrThing {
         item.previousItem = p;
         item.nextItem = n;
 
-        if(p){ p.nextItem = item;} else { n.nextItem = null};
+        if(p){ p.nextItem = item;} else { p.nextItem = null};
         if(n){ n.previousItem = item; } else { n.previousItem = null};
 
 
