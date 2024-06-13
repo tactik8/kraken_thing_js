@@ -71,8 +71,8 @@ export class KrThings extends KrThing {
         } else {
             // Handle record
             for(let k of Object.keys(value)){
-                if(k!="itemListElement"){
-                    this.addProperty(k, value[k])
+                if(k != "itemListElement"){
+                    this.replaceProperty(k, null, value[k])
                 }                
             }
             this.items = value?.itemListElement
@@ -286,8 +286,9 @@ export class KrThings extends KrThing {
         // Remove previous links of items
         this.remove(item.ref)
 
+        console.log(referenceItem)
         var p = this.get(referenceItem)
-        
+        console.log(p)
         
         var n = p.nextItem
         
@@ -315,9 +316,8 @@ export class KrThings extends KrThing {
         
         if(ref && ref.ref){ ref = ref.ref};
         
-        if (!ref || !ref['@type']){ return null};
+        if (!ref || !ref['@type'] || ref['@type'] == null){ return null };
 
-        
         if (ref['@type'] == 'ListItem'){
             return this.getByListItem(ref);
         } else {
@@ -331,7 +331,6 @@ export class KrThings extends KrThing {
         let items = this.getProperty('itemListElement').values
 
         for(let item of items){
-
             if(item.record_type == ref['@type'] && item.record_id == ref['@id']){
                 return item
             }   

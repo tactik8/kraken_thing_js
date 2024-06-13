@@ -331,7 +331,7 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
             this.items = value.getProperty("itemListElement")?.values;
         } else {
             // Handle record
-            for (let k of Object.keys(value))if (k != "itemListElement") this.addProperty(k, value[k]);
+            for (let k of Object.keys(value))if (k != "itemListElement") this.replaceProperty(k, null, value[k]);
             this.items = value?.itemListElement;
         }
     }
@@ -441,7 +441,9 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
         if (!item || item == null) item = this.add(refItemtoInsert);
         // Remove previous links of items
         this.remove(item.ref);
+        console.log(referenceItem);
         var p1 = this.get(referenceItem);
+        console.log(p1);
         var n = p1.nextItem;
         // Change allocation
         item.previousItem = p1;
@@ -456,7 +458,7 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
     get(ref) {
         if (!ref) return null;
         if (ref && ref.ref) ref = ref.ref;
-        if (!ref || !ref["@type"]) return null;
+        if (!ref || !ref["@type"] || ref["@type"] == null) return null;
         if (ref["@type"] == "ListItem") return this.getByListItem(ref);
         else return this.getByItem(ref);
     }
