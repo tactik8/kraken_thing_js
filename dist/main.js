@@ -809,7 +809,10 @@ class $60521b3a3298773d$export$45cddf157e5e52d5 {
                 "Content-Type": "application/json"
             }
         });
-        let systemRecord = await response.json();
+        let text = await response.text();
+        let systemRecord = null;
+        if (text) systemRecord = JSON.stringify(text);
+        else return false;
         let thing = this.getFromCache(record_type, record_id);
         if (!thing || thing == null) thing = new (0, $836e50e45781687c$export$3138a16edeb45799)();
         thing.setSystemRecord(systemRecord);

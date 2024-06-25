@@ -33,7 +33,7 @@ function test1(){
 
     db.postToApi(t).then(result => {
 
-        db.getFromApi('Person', 'person_1').then(t2 => {
+        db.getFromApi('Person', 'person_2').then(t2 => {
             console.log(t2.record)
             
         })

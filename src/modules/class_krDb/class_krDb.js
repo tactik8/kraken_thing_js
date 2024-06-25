@@ -66,8 +66,14 @@ export class KrDb {
           });
 
 
-        let systemRecord = await response.json()
+        let text = await response.text()
 
+        let systemRecord = null
+        if(text){
+            systemRecord = JSON.stringify(text)
+        } else { return false }
+
+        
         let thing = this.getFromCache(record_type, record_id)
 
         if(! thing || thing == null){

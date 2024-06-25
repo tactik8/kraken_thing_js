@@ -1,8 +1,8 @@
 13865
 36/home/runner/krakenthingjs/README.md1716472238383879092 0
-31/home/runner/krakenthingjs/dist1719329330930464454 1
+31/home/runner/krakenthingjs/dist1719329925669569060 1
 39/home/runner/krakenthingjs/src/index.js1719327706352886750 0
-49/home/runner/krakenthingjs/src/modules/class_krDb1719329306514501241 1
+49/home/runner/krakenthingjs/src/modules/class_krDb1719329903909601512 1
 56/home/runner/krakenthingjs/src/modules/class_KrThings.js1718294592162681839 0
 58/home/runner/krakenthingjs/src/modules/class_KrListItem.js1718286002673969736 0
 76/home/runner/krakenthingjs/src/modules/class_KrPropertyValueSpecification.js1716467805223135636 0
@@ -24,9 +24,9 @@
 30/home/runner/krakenthingjs/src1719327706384886702 1
 54/home/runner/krakenthingjs/.config/npm/node_global/lib1712150784938367743 1
 34/home/runner/krakenthingjs/.config1712150784938367743 1
-42/home/runner/krakenthingjs/.upm/store.json1719328400555853619 0
-31/home/runner/krakenthingjs/.upm1719328400555853619 1
-44/home/runner/krakenthingjs/package-lock.json1719328400279854031 0
+42/home/runner/krakenthingjs/.upm/store.json1719329913661586968 0
+31/home/runner/krakenthingjs/.upm1719329913661586968 1
+44/home/runner/krakenthingjs/package-lock.json1719329705481900130 0
 63/home/runner/krakenthingjs/node_modules/krakenrecord/replit.nix1718294101652011670 0
 62/home/runner/krakenthingjs/node_modules/krakenrecord/README.md1718294101512012051 0
 94/home/runner/krakenthingjs/node_modules/krakenrecord/.cache/nix/binary-cache-v6.sqlite-journal1718294101652011670 0
@@ -1299,14 +1299,14 @@
 104/home/runner/krakenthingjs/node_modules/@msgpackr-extract/msgpackr-extract-linux-x64/node.napi.musl.node1716472069776002834 0
 106/home/runner/krakenthingjs/node_modules/@msgpackr-extract/msgpackr-extract-linux-x64/node.abi108.musl.node1716472069692002896 0
 93/home/runner/krakenthingjs/node_modules/@msgpackr-extract/msgpackr-extract-linux-x64/index.js1716472069344003151 0
-57/home/runner/krakenthingjs/node_modules/@msgpackr-extract1719328400083854323 1
+57/home/runner/krakenthingjs/node_modules/@msgpackr-extract1719329705297900407 1
 80/home/runner/krakenthingjs/node_modules/@lmdb/lmdb-linux-x64/node.napi.musl.node1716472070404002374 0
 81/home/runner/krakenthingjs/node_modules/@lmdb/lmdb-linux-x64/node.napi.glibc.node1716472070356002408 0
 83/home/runner/krakenthingjs/node_modules/@lmdb/lmdb-linux-x64/node.abi115.glibc.node1716472070224002505 0
 83/home/runner/krakenthingjs/node_modules/@lmdb/lmdb-linux-x64/node.abi108.glibc.node1716472070132002573 0
 70/home/runner/krakenthingjs/node_modules/@lmdb/lmdb-linux-x64/README.md1716472069400003110 0
 69/home/runner/krakenthingjs/node_modules/@lmdb/lmdb-linux-x64/index.js1716472069208003251 0
-45/home/runner/krakenthingjs/node_modules/@lmdb1719328400083854323 1
+45/home/runner/krakenthingjs/node_modules/@lmdb1719329705297900407 1
 88/home/runner/krakenthingjs/node_modules/@swc/core-linux-x64-musl/swc.linux-x64-musl.node1717072686958663986 0
 74/home/runner/krakenthingjs/node_modules/@swc/core-linux-x64-musl/README.md1717072686158664575 0
 77/home/runner/krakenthingjs/node_modules/@swc/core-linux-x64-musl/package.json1717072686158664575 0
@@ -3345,7 +3345,7 @@
 71/home/runner/krakenthingjs/node_modules/@sinonjs/commons/lib/type-of.js1712144487528149179 0
 97/home/runner/krakenthingjs/node_modules/csso/node_modules/css-tree/lib/lexer/generic-an-plus-b.js1716472070452002339 0
 61/home/runner/krakenthingjs/node_modules/argparse/lib/const.js1712144487584154748 0
-63/home/runner/krakenthingjs/src/modules/class_krDb/class_krDb.js1719329306494501271 0
+63/home/runner/krakenthingjs/src/modules/class_krDb/class_krDb.js1719329903877601560 0
 58/home/runner/krakenthingjs/node_modules/lmdb/node-index.js1716472070436002350 0
 79/home/runner/krakenthingjs/node_modules/@parcel/packager-svg/src/SVGPackager.js1716472069468003060 0
 88/home/runner/krakenthingjs/node_modules/@parcel/transformer-babel/lib/babelErrorUtils.js1716472069660002919 0
@@ -3968,7 +3968,7 @@
 73/home/runner/krakenthingjs/node_modules/css-select/lib/esm/compile.js.map1716472070008002663 0
 76/home/runner/krakenthingjs/node_modules/@babel/types/lib/constants/generated1717072679582669417 1
 65/home/runner/krakenthingjs/node_modules/@parcel/optimizer-css/lib1716472069472003057 1
-39/home/runner/krakenthingjs/node_modules1719328400083854323 1
+39/home/runner/krakenthingjs/node_modules1719329705297900407 1
 53/home/runner/krakenthingjs/node_modules/@babel/parser1717072679610669397 1
 67/home/runner/krakenthingjs/node_modules/@lezer/common/dist/index.js1716472069932002720 0
 84/home/runner/krakenthingjs/.cache/typescript/5.3/node_modules/entities/lib/generated1712324807263445646 1
@@ -7062,7 +7062,7 @@
 87/home/runner/krakenthingjs/node_modules/jest-circus/node_modules/supports-color/license1717072679010669838 0
 57/home/runner/krakenthingjs/node_modules/write-file-atomic1712144486015998813 1
 85/home/runner/krakenthingjs/node_modules/@jest/transform/node_modules/has-flag/license1717072679134669747 0
-26/home/runner/krakenthingjs1719329317614484516 1
+26/home/runner/krakenthingjs1719329920013577495 1
 86/home/runner/krakenthingjs/node_modules/css-tree/cjs/syntax/config/parser-selector.cjs1716472070252002485 0
 86/home/runner/krakenthingjs/node_modules/@jest/reporters/node_modules/semver/preload.js1717072679482669491 0
 81/home/runner/krakenthingjs/node_modules/@babel/plugin-transform-numeric-separator1717072679254669659 1
@@ -8736,7 +8736,7 @@
 86/home/runner/krakenthingjs/node_modules/@babel/generator/lib/generators/methods.js.map1717072679494669481 0
 89/home/runner/krakenthingjs/node_modules/caniuse-lite/data/features/background-img-opts.js1717072679558669434 0
 85/home/runner/krakenthingjs/node_modules/@babel/generator/lib/generators/statements.js1717072679502669476 0
-43/home/runner/krakenthingjs/dist/main.js.map1719329330926464461 0
+43/home/runner/krakenthingjs/dist/main.js.map1719329925669569060 0
 98/home/runner/krakenthingjs/.cache/typescript/5.3/node_modules/@babel/types/lib/definitions/core.js1712144519627341069 0
 82/home/runner/krakenthingjs/node_modules/@parcel/config-default/test/config.test.js1716472069584002975 0
 83/home/runner/krakenthingjs/node_modules/@babel/runtime/helpers/classNameTDZError.js1717072679478669494 0
@@ -10132,7 +10132,7 @@
 63/home/runner/krakenthingjs/node_modules/source-map/package.json1712144485019899763 0
 83/home/runner/krakenthingjs/node_modules/@babel/types/lib/asserts/generated/index.js1717072679310669617 0
 85/home/runner/krakenthingjs/node_modules/jest-watcher/node_modules/color-name/index.js1717072679030669823 0
-44/home/runner/krakenthingjs/node_modules/@swc1719328400083854323 1
+44/home/runner/krakenthingjs/node_modules/@swc1719329705297900407 1
 60/home/runner/krakenthingjs/node_modules/source-map/README.md1712144485327930393 0
 68/home/runner/krakenthingjs/node_modules/source-map/lib/base64-vlq.js1712144486236020692 0
 76/home/runner/krakenthingjs/node_modules/caniuse-lite/data/features/dnssec.js1717072679706669326 0
@@ -11059,7 +11059,7 @@
 51/home/runner/krakenthingjs/node_modules/.bin/parcel1716472072680000704 0
 54/home/runner/krakenthingjs/node_modules/once/README.md1712144486996096272 0
 67/home/runner/krakenthingjs/node_modules/.bin/update-browserslist-db1717072680226668943 0
-58/home/runner/krakenthingjs/node_modules/.package-lock.json1719328400383853876 0
+58/home/runner/krakenthingjs/node_modules/.package-lock.json1719329705585899973 0
 57/home/runner/krakenthingjs/node_modules/regexpu-core/data1712150672319168805 1
 83/home/runner/krakenthingjs/node_modules/@babel/helpers/lib/helpers/applyDecs2311.js1717072679546669444 0
 88/home/runner/krakenthingjs/node_modules/regexpu-core/data/character-class-escape-sets.js1712150672319168805 0
@@ -11301,7 +11301,7 @@
 92/home/runner/krakenthingjs/node_modules/regenerate-unicode-properties/Script/Cypro_Minoan.js1712150672747211370 0
 88/home/runner/krakenthingjs/node_modules/regenerate-unicode-properties/Script/Cyrillic.js1712150672747211370 0
 87/home/runner/krakenthingjs/node_modules/regenerate-unicode-properties/Script/Deseret.js1712150672755212165 0
-39/home/runner/krakenthingjs/dist/main.js1719329330922464466 0
+39/home/runner/krakenthingjs/dist/main.js1719329925665569066 0
 90/home/runner/krakenthingjs/node_modules/regenerate-unicode-properties/Script/Devanagari.js1712150672755212165 0
 91/home/runner/krakenthingjs/node_modules/regenerate-unicode-properties/Script/Dives_Akuru.js1712150672755212165 0
 71/home/runner/krakenthingjs/node_modules/caniuse-lite/data/regions/MS.js1717072679790669264 0
@@ -11466,7 +11466,7 @@
 98/home/runner/krakenthingjs/node_modules/regenerate-unicode-properties/Binary_Property/Lowercase.js1712150672819218530 0
 112/home/runner/krakenthingjs/node_modules/regenerate-unicode-properties/Binary_Property/Noncharacter_Code_Point.js1712150672847221314 0
 108/home/runner/krakenthingjs/node_modules/regenerate-unicode-properties/Binary_Property/Pattern_White_Space.js1712150672859222508 0
-47/home/runner/krakenthingjs/node_modules/@parcel1719328400083854323 1
+47/home/runner/krakenthingjs/node_modules/@parcel1719329705297900407 1
 107/home/runner/krakenthingjs/node_modules/regenerate-unicode-properties/Binary_Property/Regional_Indicator.js1712150672863222906 0
 106/home/runner/krakenthingjs/node_modules/regenerate-unicode-properties/Binary_Property/Sentence_Terminal.js1712150672871223701 0
 100/home/runner/krakenthingjs/node_modules/regenerate-unicode-properties/Binary_Property/Soft_Dotted.js1712150672875224099 0
@@ -12846,7 +12846,7 @@
 75/home/runner/krakenthingjs/node_modules/css-tree/lib/syntax/pseudo/index.js1716472070448002341 0
 113/home/runner/krakenthingjs/node_modules/@parcel/optimizer-htmlnano/node_modules/svgo/plugins/removeHiddenElems.js1716472070172002544 0
 126/home/runner/krakenthingjs/node_modules/@parcel/optimizer-htmlnano/node_modules/svgo/plugins/removeNonInheritableGroupAttrs.js1716472070180002538 0
-39/home/runner/krakenthingjs/package.json1719329317590484553 0
+39/home/runner/krakenthingjs/package.json1719329919993577525 0
 114/home/runner/krakenthingjs/node_modules/@parcel/optimizer-htmlnano/node_modules/svgo/plugins/removeRasterImages.js1716472070180002538 0
 107/home/runner/krakenthingjs/node_modules/@parcel/optimizer-htmlnano/node_modules/svgo/plugins/removeTitle.js1716472070192002529 0
 106/home/runner/krakenthingjs/node_modules/@parcel/optimizer-htmlnano/node_modules/svgo/plugins/reusePaths.js1716472070208002518 0
@@ -13728,7 +13728,7 @@
 55/home/runner/krakenthingjs/node_modules/kleur/readme.md1712144485503947896 0
 88/home/runner/krakenthingjs/node_modules/@parcel/core/node_modules/semver/functions/lt.js1716472069912002734 0
 89/home/runner/krakenthingjs/node_modules/@parcel/core/node_modules/semver/functions/lte.js1716472069916002731 0
-36/home/runner/krakenthingjs/script.js1719327026673897786 0
+36/home/runner/krakenthingjs/script.js1719329913397587362 0
 91/home/runner/krakenthingjs/node_modules/@parcel/core/node_modules/semver/functions/major.js1716472069928002723 0
 78/home/runner/krakenthingjs/node_modules/css-select/lib/esm/attributes.d.ts.map1716472069964002696 0
 100/home/runner/krakenthingjs/node_modules/@parcel/optimizer-htmlnano/node_modules/csso/lib/restructure1716472070208002518 1
