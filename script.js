@@ -3,156 +3,46 @@ import { KrThings } from "./src/index.js";
 import { KrListItem } from "./src/index.js";
 import { KrPropertyValueSpecification } from "./src/index.js";
 
-function test1() {
-    let record = {
-        "@type": "ItemList",
-        "@id": "ItemList0",
-        name: "ItemList0",
-        itemListElement: [
-            {
-                "@type": "ListItem",
-                "@id": "ListItem0",
-                name: "ListItem0",
-                position: 0,
-                previousItem: null,
-                nextItem: {
-                    "@type": "ListItem",
-                    "@id": "ListItem1",
-                },
-                item: {
-                    "@type": "Thing",
-                    "@id": "Thing0",
-                    name: "Thing0",
-                    url: "https://www.test.com/thing0",
-                },
-            },
-            {
-                "@type": "ListItem",
-                "@id": "ListItem1",
-                name: "ListItem1",
-                position: 1,
-                previousItem: {
-                    "@type": "ListItem",
-                    "@id": "ListItem0",
-                },
-                nextItem: {
-                    "@type": "ListItem",
-                    "@id": "ListItem2",
-                },
-                item: {
-                    "@type": "Thing",
-                    "@id": "Thing1",
-                    name: "Thing1",
-                    url: "https://www.test.com/thing1",
-                },
-            },
-            {
-                "@type": "ListItem",
-                "@id": "ListItem2",
-                name: "ListItem2",
-                position: 2,
-                previousItem: {
-                    "@type": "ListItem",
-                    "@id": "ListItem1",
-                },
-                nextItem: {
-                    "@type": "ListItem",
-                    "@id": "ListItem3",
-                },
-                item: {
-                    "@type": "Thing",
-                    "@id": "Thing2",
-                    name: "Thing2",
-                    url: "https://www.test.com/thing2",
-                },
-            },
-            {
-                "@type": "ListItem",
-                "@id": "ListItem3",
-                name: "ListItem3",
-                position: 3,
-                previousItem: {
-                    "@type": "ListItem",
-                    "@id": "ListItem2",
-                },
-                nextItem: null,
-                item: {
-                    "@type": "Thing",
-                    "@id": "Thing3",
-                    name: "Thing3",
-                    url: "https://www.test.com/thing3",
-                },
-            },
-        ],
-    };
+import {KrDb} from './src/modules/class_krDb/class_krDb.js'
 
-    let things = new KrThings();
-    things.record = record;
-    console.log(JSON.stringify(things.record, null, 4));
+function test1(){
 
-   
-    let refItem = { "@type": "ListItem", "@id": "ListItem2" };
-
-    let newItem = {
-        "@type": "ListItem",
-        "@id": "ListItem4",
-        name: "ListItem4",
-        item: {
-            "@type": "Thing",
-            "@id": "Thing4",
-            name: "Thing4",
-            url: "https://www.test.com/thing4"
-        }
-    };
-
-    things.insertAfter(refItem, newItem);
-
-    console.log(JSON.stringify(things.record, null, 4));
-
-
-    let newItem2 = {
-            "@type": "Thing",
-            "@id": "Thing5",
-            name: "Thing5",
-            url: "https://www.test.com/thing5"
-        }
-    things.insertAfter(refItem, newItem2);
-
-    console.log(JSON.stringify(things.record, null, 4));
-    
-
-    
-}
-
-
-function test2(){
 
     let record = {
-        "@type": "ItemList",
-        "@id": "ItemList0",
-        name: "ItemList0"
-    }
-    
-    let t = new KrThings()
-    console.log(t.getProperty('@id').values)
+             "@type": "Person",
+             "@id": "person_1",
+             "givenName": "givenName_1",
+             "familyName": "familyName_1",
+             "email": "test@test.com",
+             "telephone": "1-514-111-2222",
+             "hasOccupation": {
+                 "@type": "Occupation",
+                 "name": "occupation_1"
+                 },
+             "worksfor": {
+                 "@type": "organization",
+                 "name": "test_org_1",
+                 "url": "https://www.test.com"
+                 }
+         }
+
+    let t = new KrThing()
     t.record = record
+
+    let db = new KrDb()
+
+    db.postToApi(t).then(result => {
+
+        db.getFromApi('Person', 'person_1').then(t2 => {
+            console.log(t2.record)
+            
+        })
+        
+        
+    })
+
     
-    console.log(JSON.stringify(t.record, null, 4))
-    console.log(t.getProperty('@id').value)
-
-
-    t.replaceProperty('@id', null, 'bob3')
-    console.log(t.getProperty('@id').value)
-    
-    let p = t.getProperty('@id')
-
-    for(let pv of p.propertyValues){
-
-        console.log('value')
-        pv.printScreen()
-    }
     
 }
 
-test1();
-//test2()
+test1()

@@ -772,11 +772,72 @@ class $2f5d4658e18a068e$export$6f5bc0f54215664f extends (0, $836e50e45781687c$ex
 }
 
 
+
+//const API_URL = 'https://data.krknapi.com/api/test7'
+const $60521b3a3298773d$var$API_URL = "https://2d432316-7c15-4f0f-9214-d4f6fba60627-00-1b1hmvrd8c12s.spock.replit.dev/api/test7";
+class $60521b3a3298773d$export$45cddf157e5e52d5 {
+    constructor(api_url = null){
+        this._things = {};
+        this._api_url = api_url || $60521b3a3298773d$var$API_URL;
+    }
+    getFromCache(record_type, record_id) {
+        return this._things?.[record_type]?.[record_id] || null;
+    }
+    postToCache(thing) {
+        if (!thing.record_type) {
+            let t = new (0, $836e50e45781687c$export$3138a16edeb45799)();
+            t.record = thing;
+            thing = t;
+        }
+        let record_type = thing.record_type;
+        let record_id = thing.record_id;
+        if (!this._things[record_type]) this._things[record_type] = {};
+        this._things[record_type][record_id] = thing;
+    }
+    get things() {
+        let things = [];
+        for (let record_type of Object.keys(this._things)){
+            for (let record_id of Object.keys(this._things?.[record_type]))if (this._things?.[record_type]?.[record_id]) things.push(this._things?.[record_type]?.[record_id]);
+        }
+    }
+    async getFromApi(record_type, record_id) {
+        let url = `${this._api_url}?record_type=${record_type}&record_id=${record_id}`;
+        console.log(url);
+        const response = await fetch(url, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+        let systemRecord = await response.json();
+        let thing = new (0, $836e50e45781687c$export$3138a16edeb45799)();
+        thing.setSystemRecord(systemRecord);
+        this.postToCache(thing);
+        return thing;
+    }
+    async postToApi(thing) {
+        let url = this._api_url;
+        let record = thing.getSystemRecord();
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(record)
+        });
+        let result = await response.json();
+        console.log("result", result);
+        return thing;
+    }
+}
+
+
 var $cf838c15c8b009ba$export$3138a16edeb45799 = (0, $836e50e45781687c$export$3138a16edeb45799);
 var $cf838c15c8b009ba$export$625c98c0044d29a6 = (0, $347a3ff9d6941f10$export$625c98c0044d29a6);
 var $cf838c15c8b009ba$export$f22625b8b2b04e84 = (0, $14fcc60f5820458e$export$f22625b8b2b04e84);
 var $cf838c15c8b009ba$export$6f5bc0f54215664f = (0, $2f5d4658e18a068e$export$6f5bc0f54215664f);
+var $cf838c15c8b009ba$export$45cddf157e5e52d5 = (0, $60521b3a3298773d$export$45cddf157e5e52d5);
 
 
-export {$cf838c15c8b009ba$export$3138a16edeb45799 as KrThing, $cf838c15c8b009ba$export$625c98c0044d29a6 as KrThings, $cf838c15c8b009ba$export$f22625b8b2b04e84 as KrListItem, $cf838c15c8b009ba$export$6f5bc0f54215664f as KrPropertyValueSpecification};
+export {$cf838c15c8b009ba$export$3138a16edeb45799 as KrThing, $cf838c15c8b009ba$export$625c98c0044d29a6 as KrThings, $cf838c15c8b009ba$export$f22625b8b2b04e84 as KrListItem, $cf838c15c8b009ba$export$6f5bc0f54215664f as KrPropertyValueSpecification, $cf838c15c8b009ba$export$45cddf157e5e52d5 as KrDb};
 //# sourceMappingURL=main.js.map
