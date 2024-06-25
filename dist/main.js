@@ -810,7 +810,8 @@ class $60521b3a3298773d$export$45cddf157e5e52d5 {
             }
         });
         let systemRecord = await response.json();
-        let thing = new (0, $836e50e45781687c$export$3138a16edeb45799)();
+        let thing = this.getFromCache(record_type, record_id);
+        if (!thing || thing == null) thing = new (0, $836e50e45781687c$export$3138a16edeb45799)();
         thing.setSystemRecord(systemRecord);
         this.postToCache(thing);
         return thing;

@@ -67,8 +67,12 @@ export class KrDb {
 
 
         let systemRecord = await response.json()
-        
-        let thing = new KrThing()
+
+        let thing = this.getFromCache(record_type, record_id)
+
+        if(! thing || thing == null){
+            thing = new KrThing()
+        }
         thing.setSystemRecord(systemRecord)
         this.postToCache(thing)
 
