@@ -17,7 +17,7 @@ export class KrakenDataApiClient {
 
         if(!this.apiBaseUrl){this.apiBaseUrl = this.apiBaseUrl || 'https://data.krknapi.com'};
 
-        if(!this.apiPath){this.apiPath = this.apiPath || '/api/test_container'};
+        if(!this.apiPath){this.apiPath = this.apiPath || '/api/test7'};
 
         this.headers = this.headers || {
             "Content-Type": "application/json",

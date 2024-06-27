@@ -48,7 +48,9 @@ export class KrThing extends KrThingRecord {
 
 
     get schema(){
-        return KrakenSchemas.get(this.record_type);
+        let schema = KrakenSchemas.get(this.record_type);
+        schema.thing = this
+        return schema
     }
 
 
@@ -228,7 +230,11 @@ export class KrThing extends KrThingRecord {
 
         this.setFullRecord(KrSamples(this.record_type, record_id));
     }
-    
+
+
+    get headings(){
+        return this.schema.headings
+    }
     get_heading1(){
         
         return this.schema.get_heading1(this.getBestRecord());

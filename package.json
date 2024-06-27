@@ -16,10 +16,10 @@
   },
   "name": "krakenthing",
   "description": "Thing class",
-  "version": "1.0.43",
+  "version": "1.0.44",
   "dependencies": {
-    "krakenrecord": "^1.0.24",
-    "krakenschema": "^1.0.0",
+    "krakenrecord": "^1.0.26",
+    "krakenschema": "^1.0.1",
     "uuid": "^9.0.1"
   },
   "author": "Tactik8",

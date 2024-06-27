@@ -46,7 +46,7 @@ class $bb461f612cc69085$export$7a23a968115f49cd {
     init_KrakenApi() {
         //this.apiBaseUrl = this.apiBaseUrl || 'https://5a37e52f-2a27-47ff-b754-2a573636cb5a-00-ayio2unothdd.spock.replit.dev';
         if (!this.apiBaseUrl) this.apiBaseUrl = this.apiBaseUrl || "https://data.krknapi.com";
-        if (!this.apiPath) this.apiPath = this.apiPath || "/api/test_container";
+        if (!this.apiPath) this.apiPath = this.apiPath || "/api/test7";
         this.headers = this.headers || {
             "Content-Type": "application/json",
             "Authorization": "bob"
@@ -85,7 +85,9 @@ class $836e50e45781687c$export$3138a16edeb45799 extends (0, $5OpyM$KrThing) {
     //return get_html_form(this.record_type);
     }
     get schema() {
-        return (0, $5OpyM$KrakenSchemas).get(this.record_type);
+        let schema = (0, $5OpyM$KrakenSchemas).get(this.record_type);
+        schema.thing = this;
+        return schema;
     }
     // -----------------------------------------------------
     //  Properties 
@@ -221,6 +223,9 @@ class $836e50e45781687c$export$3138a16edeb45799 extends (0, $5OpyM$KrThing) {
     }
     set_sample(record_id) {
         this.setFullRecord((0, $5OpyM$KrSamples)(this.record_type, record_id));
+    }
+    get headings() {
+        return this.schema.headings;
     }
     get_heading1() {
         return this.schema.get_heading1(this.getBestRecord());
@@ -773,66 +778,157 @@ class $2f5d4658e18a068e$export$6f5bc0f54215664f extends (0, $836e50e45781687c$ex
 
 
 
-//const API_URL = 'https://data.krknapi.com/api/test7'
-const $60521b3a3298773d$var$API_URL = "https://2d432316-7c15-4f0f-9214-d4f6fba60627-00-1b1hmvrd8c12s.spock.replit.dev/api/test7";
-class $60521b3a3298773d$export$45cddf157e5e52d5 {
-    constructor(api_url = null){
-        this._things = {};
-        this._api_url = api_url || $60521b3a3298773d$var$API_URL;
+class $7812463799ce0094$export$f5bc5036afac6116 {
+    /**
+     * Cache to store things
+     */ constructor(maxTime = null){
+        this._db = {};
+        this._maxTime = maxTime;
     }
-    getFromCache(record_type, record_id) {
-        return this._things?.[record_type]?.[record_id] || null;
+    get(record_type, record_id) {
+        if (!record_type || record_type == null) return null;
+        if (!record_id || record_id == null) return null;
+        return this._db?.[record_type]?.[record_id]?.["item"] || null;
     }
-    postToCache(thing) {
-        if (!thing.record_type) {
-            let t = new (0, $836e50e45781687c$export$3138a16edeb45799)();
-            t.record = thing;
-            thing = t;
-        }
+    set(thing) {
         let record_type = thing.record_type;
         let record_id = thing.record_id;
-        if (!this._things[record_type]) this._things[record_type] = {};
-        this._things[record_type][record_id] = thing;
+        if (!record_type || record_type == null) return null;
+        if (!record_id || record_id == null) return null;
+        this._db[record_type] = this._db[record_type] || {};
+        this._db[record_type][record_id] = this._db[record_type][record_id] || {};
+        this._db[record_type][record_id].item = thing;
+        this._db[record_type][record_id].date = Date();
+    }
+    post(thing) {
+        return this.set(thing);
     }
     get things() {
         let things = [];
-        for (let record_type of Object.keys(this._things)){
-            for (let record_id of Object.keys(this._things?.[record_type]))if (this._things?.[record_type]?.[record_id]) things.push(this._things?.[record_type]?.[record_id]);
+        for (let record_type of Object.keys(this._db))for (let record_id of Object.keys(this._db[record_type])){
+            let thing = this.get(record_type, record_id);
+            things.push(thing);
+        }
+        return things;
+    }
+}
+
+
+const $60521b3a3298773d$var$API_URL = "https://data.krknapi.com/api/test7";
+class $60521b3a3298773d$export$45cddf157e5e52d5 {
+    /**
+     * Database to store things and access API
+     *
+     * Attributes:
+     * - _api_url: the url for the api
+     * - things: Lis tof all things in db cache local
+     *
+     * Methods:
+     * - get: get thing from local cache
+     * - set: set thing in local cache
+     * - getFromApi: get from api
+     * - postToApi: post to Api
+     * - postAll: post all things to api
+     * - refreshAll: refresh all things from api
+     * 
+     */ constructor(api_url = null){
+        this._localCache = new (0, $7812463799ce0094$export$f5bc5036afac6116)();
+        this._apiCache = new (0, $7812463799ce0094$export$f5bc5036afac6116)();
+        this._api_url = api_url || $60521b3a3298773d$var$API_URL;
+    }
+    get things() {
+        return this._localCache.things;
+    }
+    get(record_type, record_id) {
+        return this._localCache.get(record_type, record_id);
+    }
+    set(thing) {
+        this._localCache.set(thing);
+        for (let t of thing.things){
+            let localT = this._localCache.get(t.record_type, t.record_id);
+            if (!localT || localT == null) this._localCache.set(t);
         }
     }
+    async postAll() {
+        /**
+         * Posts all thing to API if they have changed
+         */ let records = [];
+        for (let t of this._localCache.things)if (this._testIsInSync(t.record_type, t.record_id) == false) records.push(t.getSystemRecord());
+        let result = await $60521b3a3298773d$var$postRecordToApi(this._api_url, records);
+        return result;
+    }
+    async refreshAll() {
+        /**
+         * Retrieve latest value from api
+         */ let results = [];
+        for (let thing of this._apiCache.things){
+            let result = await this.getFromApi(thing.record_type, thing.record_id);
+            results.push(result);
+        }
+        return results;
+    }
+    _testIsInSync(record_type, record_id) {
+        /**
+         * Returns true if api cache is equal to local cache
+         */ let local = this._localCache.get(record_type, record_id);
+        let api = this._apiCache.get(record_type, record_id);
+        let localRecord = JSON.stringify(local);
+        let apiRecord = JSON.stringify(api);
+        return localRecord == apiRecord;
+    }
     async getFromApi(record_type, record_id) {
-        let url = `${this._api_url}?record_type=${record_type}&record_id=${record_id}`;
-        console.log(url);
-        const response = await fetch(url, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json"
-            }
-        });
-        let text = await response.text();
-        let systemRecord = null;
-        if (text) systemRecord = JSON.stringify(text);
-        else return false;
-        let thing = this.getFromCache(record_type, record_id);
-        if (!thing || thing == null) thing = new (0, $836e50e45781687c$export$3138a16edeb45799)();
+        /**
+         * Updates local thing with value from API
+         */ // Retrieve record from api
+        let systemRecord = await $60521b3a3298773d$var$getRecordFromApi(this._api_url, record_type, record_id);
+        if (!systemRecord || systemRecord == null) return;
+        // Store api thing in cache
+        let apiThing = new (0, $836e50e45781687c$export$3138a16edeb45799)();
+        apiThing.setSystemRecord(systemRecord);
+        this._apiCache.set(apiThing);
+        // Retrieve corresponding thing from local cache
+        let thing = this._localCache.get(record_type, record_id);
+        // Create new thing if not exist
+        if (!thing || thing == null) {
+            thing = new (0, $836e50e45781687c$export$3138a16edeb45799)();
+            this._localCache.set(thing);
+        }
+        // Load record to thing
         thing.setSystemRecord(systemRecord);
-        this.postToCache(thing);
         return thing;
     }
     async postToApi(thing) {
-        let url = this._api_url;
-        let record = thing.getSystemRecord();
-        const response = await fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(record)
-        });
-        let result = await response.json();
-        console.log("result", result);
-        return thing;
+        // Skip if already in sync
+        if (this._testIsInSync(thing.record_type, thing.record_id)) return true;
+        let result = await $60521b3a3298773d$var$postRecordToApi(this._api_url, thing.getSystemRecord());
+        return result;
     }
+}
+async function $60521b3a3298773d$var$getRecordFromApi(api_url, record_type, record_id) {
+    let url = `${api_url}?record_type=${record_type}&record_id=${record_id}`;
+    const response = await fetch(url, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    });
+    let text = await response.text();
+    let systemRecord = null;
+    if (text) systemRecord = JSON.stringify(text);
+    else return false;
+    return systemRecord;
+}
+async function $60521b3a3298773d$var$postRecordToApi(api_url, record) {
+    let url = api_url;
+    const response = await fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(record)
+    });
+    let result = await response.json();
+    return result;
 }
 
 

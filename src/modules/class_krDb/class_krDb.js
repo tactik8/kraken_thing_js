@@ -1,115 +1,184 @@
 
 import {KrThing} from '../class_KrThing.js'
 
-//const API_URL = 'https://data.krknapi.com/api/test7'
+import { KrCache } from '../class_krCache/class_krCache.js'
 
-const API_URL ='https://2d432316-7c15-4f0f-9214-d4f6fba60627-00-1b1hmvrd8c12s.spock.replit.dev/api/test7'
+
+
+const API_URL = 'https://data.krknapi.com/api/test7'
+
+//const API_URL ='https://2d432316-7c15-4f0f-9214-d4f6fba60627-00-1b1hmvrd8c12s.spock.replit.dev/api/test7'
 
 export class KrDb {
+    /**
+     * Database to store things and access API
+     *
+     * Attributes:
+     * - _api_url: the url for the api
+     * - things: Lis tof all things in db cache local
+     *
+     * Methods:
+     * - get: get thing from local cache
+     * - set: set thing in local cache
+     * - getFromApi: get from api
+     * - postToApi: post to Api
+     * - postAll: post all things to api
+     * - refreshAll: refresh all things from api
+     * 
+     */
 
 
     constructor(api_url=null) {
-        this._things = {}
-
-        this._api_url = api_url || API_URL
-        
-    }
-
-    getFromCache(record_type, record_id){
-
-        return this._things?.[record_type]?.[record_id] || null
-
-    }
-
-    postToCache(thing){
-
-        if(!thing.record_type){
-            let t = new KrThing()
-            t.record = thing
-            thing = t
-        }
-        
-        let record_type = thing.record_type
-        let record_id = thing.record_id
-
-        if(!this._things[record_type]){
-            this._things[record_type] = {}
-        }
-        this._things[record_type][record_id] = thing
-
+        this._localCache = new KrCache()
+        this._apiCache = new KrCache()        
+        this._api_url = api_url || API_URL        
     }
 
     get things(){
-
-        let things = []
-        for(let record_type of Object.keys(this._things)){
-            for(let record_id of Object.keys(this._things?.[record_type])){
-                if(this._things?.[record_type]?.[record_id]){
-                    things.push(this._things?.[record_type]?.[record_id])
-                }
-            }
-        }
+        return this._localCache.things
     }
 
-    async getFromApi(record_type, record_id){
+    get(record_type, record_id){
+        return this._localCache.get(record_type, record_id)
+    }
+    
+    set(thing){
+        this._localCache.set(thing)
 
-        let url = `${this._api_url}?record_type=${record_type}&record_id=${record_id}` 
-         
-       
-        console.log(url)
-        const response = await fetch(url, {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            //body: JSON.stringify(data), 
-          });
+        for(let t of thing.things){
+            let localT = this._localCache.get(t.record_type, t.record_id)
+            if(!localT || localT == null){
+                this._localCache.set(t)
+            }
+        }        
+    }
 
+    async postAll(){
+        /**
+         * Posts all thing to API if they have changed
+         */
+        let records = []
+        for(let t of this._localCache.things){
+            if(this._testIsInSync(t.record_type, t.record_id)== false){ 
+                records.push(t.getSystemRecord())
+                
+            }
+        }
+        let result = await postRecordToApi(this._api_url, records)
+        return result
+    }
 
-        let text = await response.text()
+    async refreshAll(){
+        /**
+         * Retrieve latest value from api
+         */
+        let results = []
+        for(let thing of this._apiCache.things){
+            let result = await this.getFromApi(thing.record_type, thing.record_id)
+            results.push(result)
+        }
+        return results
+    }
 
-        let systemRecord = null
-        if(text){
-            systemRecord = JSON.stringify(text)
-        } else { return false }
+    _testIsInSync(record_type, record_id){
+        /**
+         * Returns true if api cache is equal to local cache
+         */
 
+        let local = this._localCache.get(record_type, record_id)
+        let api = this._apiCache.get(record_type, record_id)
+
+        let localRecord = JSON.stringify(local)
+        let apiRecord = JSON.stringify(api)
+
+        return localRecord == apiRecord
         
-        let thing = this.getFromCache(record_type, record_id)
+    }
 
+
+    async getFromApi(record_type, record_id){
+        /**
+         * Updates local thing with value from API
+         */
+
+
+        // Retrieve record from api
+        let systemRecord = await getRecordFromApi(this._api_url, record_type, record_id)
+        if(!systemRecord || systemRecord == null) { return }
+
+        // Store api thing in cache
+        let apiThing = new KrThing()
+        apiThing.setSystemRecord(systemRecord)
+        this._apiCache.set(apiThing)
+        
+        // Retrieve corresponding thing from local cache
+        let thing = this._localCache.get(record_type, record_id)
+
+        // Create new thing if not exist
         if(! thing || thing == null){
             thing = new KrThing()
+            this._localCache.set(thing)
         }
-        thing.setSystemRecord(systemRecord)
-        this.postToCache(thing)
 
+        // Load record to thing
+        thing.setSystemRecord(systemRecord)
+        
         return thing
     
     }
 
 
-
     async postToApi(thing){
 
-        let url = this._api_url 
+        // Skip if already in sync
+        if(this._testIsInSync(thing.record_type, thing.record_id)){ return true }
 
-        let record = thing.getSystemRecord()
-        
-        const response = await fetch(url, {
-        method: "POST",
+        let result = await postRecordToApi(this._api_url, thing.getSystemRecord())
+        return result
+    }
+}
+
+
+
+async function getRecordFromApi(api_url, record_type, record_id){
+
+    let url = `${api_url}?record_type=${record_type}&record_id=${record_id}` 
+    
+    const response = await fetch(url, {
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
-            body: JSON.stringify(record), 
-        });
+        
+      });
 
 
-        let result = await response.json()
-        console.log('result', result)
+    let text = await response.text()
 
-        return thing
+    let systemRecord = null
+    if(text){
+        systemRecord = JSON.stringify(text)
+    } else { return false }
 
-    }
+    return systemRecord
+    
+}
 
 
+async function postRecordToApi(api_url, record){
 
+    let url = api_url 
+
+    const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+        body: JSON.stringify(record), 
+    });
+
+
+    let result = await response.json()
+
+    return result
 }
