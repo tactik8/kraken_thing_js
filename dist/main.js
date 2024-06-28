@@ -9,7 +9,6 @@ async function $689b3c5db7d7e242$export$203df0a267d8bdb2(apiBaseUrl, apiPath, he
         method: "GET",
         headers: headers
     };
-    console.log("get", record_type, record_id);
     let params = {
         "@type": record_type,
         "@id": record_id
@@ -18,8 +17,6 @@ async function $689b3c5db7d7e242$export$203df0a267d8bdb2(apiBaseUrl, apiPath, he
     new_url.search = new URLSearchParams(params);
     const response = await fetch(new_url, requestOptions);
     let record = await response.json();
-    console.log(response.body);
-    console.log("get", record);
     return record;
 }
 async function $689b3c5db7d7e242$export$ad21aaf36715c9e5(apiBaseUrl, apiPath, headers, record) {
@@ -31,7 +28,6 @@ async function $689b3c5db7d7e242$export$ad21aaf36715c9e5(apiBaseUrl, apiPath, he
     let new_url = new URL(apiPath, apiBaseUrl);
     const response = await fetch(new_url, requestOptions);
     let result = await response.json();
-    console.log("res", response.status);
     return result;
 }
 
@@ -213,6 +209,7 @@ class $836e50e45781687c$export$3138a16edeb45799 extends (0, $5OpyM$KrThing) {
     async api_post() {
         var k = new (0, $bb461f612cc69085$export$7a23a968115f49cd)();
         let records = [];
+        records.push(this.getSystemRecord());
         for (let t of this.things)records.push(t.getSystemRecord());
         return await k.post(records);
     }
@@ -320,8 +317,9 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
     - lt:        Worst metadata in order of c and d
     - gt:        Best metadata in order of c and d
 
-    */ constructor(){
-        super("ItemList");
+    */ constructor(record_type = null, record_id = null){
+        super(record_type, record_id);
+        this.record_type = "ItemList";
     }
     get items() {
         let results = [];
@@ -348,6 +346,8 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
         return super.record;
     }
     set record(value) {
+        //super.record = value
+        //return
         if (value.record_type) {
             // Handle thing
             let properties = value.properties;
@@ -816,7 +816,8 @@ class $7812463799ce0094$export$f5bc5036afac6116 {
 }
 
 
-const $60521b3a3298773d$var$API_URL = "https://data.krknapi.com/api/test7";
+//const API_URL = 'https://data.krknapi.com/api/test7'
+const $60521b3a3298773d$var$API_URL = "https://2d432316-7c15-4f0f-9214-d4f6fba60627-00-1b1hmvrd8c12s.spock.replit.dev/api/test7";
 class $60521b3a3298773d$export$45cddf157e5e52d5 {
     /**
      * Database to store things and access API

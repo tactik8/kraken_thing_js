@@ -19,8 +19,9 @@ export class KrThings extends KrThing {
     */
 
 
-    constructor() {
-        super('ItemList');
+    constructor(record_type=null, record_id=null) {
+        super(record_type, record_id);
+        this.record_type = 'ItemList'
 
     }
 
@@ -67,6 +68,9 @@ export class KrThings extends KrThing {
     
     set record(value){
 
+         //super.record = value
+        //return
+        
         if(value.record_type){
             // Handle thing
             let properties = value.properties

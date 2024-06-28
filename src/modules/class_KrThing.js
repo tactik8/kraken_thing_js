@@ -216,6 +216,8 @@ export class KrThing extends KrThingRecord {
         var k = new KrakenDataApiClient();
 
         let records = []
+        records.push(this.getSystemRecord())
+        
         for(let t of this.things){
             records.push(t.getSystemRecord())
         }

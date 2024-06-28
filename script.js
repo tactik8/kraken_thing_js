@@ -182,17 +182,18 @@ function test4(){
 
     let record = {
         "@type": "ItemList",
-        "@id": "Itemlist1",
-        name: "Itemlist1",
+        "@id": "Itemlist11",
+        name: "Itemlist11",
         itemListElement: []//getSampleRecords(1)
     }
 
-    let things = new KrThings(record)
+    let things = new KrThings()
+    things.record = record
     //let things = new KrThings("ItemList", "Itemlist1")
 
-    console.log(things.record_id)
-    console.log('a', JSON.stringify(things.getSystemRecord(), null, 4))
-    //things.api_post()
+    //console.log(things.record_id)
+    //console.log('a', JSON.stringify(things.getSystemRecord(), null, 4))
+    things.api_post()
 }
 
 

@@ -5,9 +5,9 @@ import { KrCache } from '../class_krCache/class_krCache.js'
 
 
 
-const API_URL = 'https://data.krknapi.com/api/test7'
+//const API_URL = 'https://data.krknapi.com/api/test7'
 
-//const API_URL ='https://2d432316-7c15-4f0f-9214-d4f6fba60627-00-1b1hmvrd8c12s.spock.replit.dev/api/test7'
+const API_URL ='https://2d432316-7c15-4f0f-9214-d4f6fba60627-00-1b1hmvrd8c12s.spock.replit.dev/api/test7'
 
 export class KrDb {
     /**
