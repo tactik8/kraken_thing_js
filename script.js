@@ -155,8 +155,8 @@ async function test3(){
     let record = {
             "@context": "https://schema.org/",
             "@type": "Thing",
-            "@id": "thing1",
-            "name": "thing1",
+            "@id": "thing2",
+            "name": "thing2",
             "image": {
                     "@context": "https://schema.org/",
                     "@type": "ImageObject",
@@ -166,9 +166,9 @@ async function test3(){
                 }
         }
 
-    let t = new KrThing("Thing", 'thing1')
+    let t = new KrThing(record)
 
-    let r1 = await t.api_get()
+    let r1 = await t.api_post()
 
     
     console.log(JSON.stringify(t.bestRecord, null, 4))
@@ -177,7 +177,23 @@ async function test3(){
 
 }
 
+function test4(){
 
 
+    let record = {
+        "@type": "ItemList",
+        "@id": "Itemlist1",
+        name: "Itemlist1",
+        itemListElement: []//getSampleRecords(1)
+    }
 
-test3()
+    let things = new KrThings(record)
+    //let things = new KrThings("ItemList", "Itemlist1")
+
+    console.log(things.record_id)
+    console.log('a', JSON.stringify(things.getSystemRecord(), null, 4))
+    //things.api_post()
+}
+
+
+test4()

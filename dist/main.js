@@ -212,7 +212,9 @@ class $836e50e45781687c$export$3138a16edeb45799 extends (0, $5OpyM$KrThing) {
     }
     async api_post() {
         var k = new (0, $bb461f612cc69085$export$7a23a968115f49cd)();
-        return await k.post(this.getSystemRecord());
+        let records = [];
+        for (let t of this.things)records.push(t.getSystemRecord());
+        return await k.post(records);
     }
     // -----------------------------------------------------
     //  Headings  
@@ -318,8 +320,8 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
     - lt:        Worst metadata in order of c and d
     - gt:        Best metadata in order of c and d
 
-    */ constructor(record_id = null){
-        super("ItemList", record_id);
+    */ constructor(){
+        super("ItemList");
     }
     get items() {
         let results = [];
@@ -840,7 +842,16 @@ class $60521b3a3298773d$export$45cddf157e5e52d5 {
         return this._localCache.things;
     }
     get(record_type, record_id) {
-        return this._localCache.get(record_type, record_id);
+        /**
+         * Returns thing from local cache.
+         * If not present, creates one and calls api to refresh data
+         */ let localThing = this._localCache.get(record_type, record_id);
+        if (localThing && localThing != null) return localThing;
+        else {
+            let thing = new (0, $836e50e45781687c$export$3138a16edeb45799)(record_type, record_id);
+            this._localCache.set(thing);
+            this.getFromApi(record_type, record_id);
+        }
     }
     set(thing) {
         this._localCache.set(thing);
@@ -853,7 +864,10 @@ class $60521b3a3298773d$export$45cddf157e5e52d5 {
         /**
          * Posts all thing to API if they have changed
          */ let records = [];
-        for (let t of this._localCache.things)if (this._testIsInSync(t.record_type, t.record_id) == false) records.push(t.getSystemRecord());
+        for (let t of this._localCache.things){
+            console.log("t", t.record_type, t.record_id);
+            if (this._testIsInSync(t.record_type, t.record_id) == false) records.push(t.getSystemRecord());
+        }
         let result = await $60521b3a3298773d$var$postRecordToApi(this._api_url, records);
         return result;
     }

@@ -39,6 +39,7 @@ export class KrThing extends KrThingRecord {
     constructor(record_type = null, record_id = null) {
         super(record_type, record_id);
         
+        
     }
 
 
@@ -211,8 +212,15 @@ export class KrThing extends KrThingRecord {
         
     }
     async api_post() {
+        
         var k = new KrakenDataApiClient();
-        return await k.post(this.getSystemRecord());
+
+        let records = []
+        for(let t of this.things){
+            records.push(t.getSystemRecord())
+        }
+        
+        return await k.post(records);
     }
 
 

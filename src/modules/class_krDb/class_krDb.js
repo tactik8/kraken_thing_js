@@ -39,7 +39,21 @@ export class KrDb {
     }
 
     get(record_type, record_id){
-        return this._localCache.get(record_type, record_id)
+        /**
+         * Returns thing from local cache.
+         * If not present, creates one and calls api to refresh data
+         */
+        let localThing =  this._localCache.get(record_type, record_id)
+        if(localThing && localThing != null){
+            return localThing
+            
+        } else {
+
+            let thing = new KrThing(record_type, record_id)
+            this._localCache.set(thing)
+            this.getFromApi(record_type, record_id)
+        }
+        
     }
     
     set(thing){
@@ -59,6 +73,7 @@ export class KrDb {
          */
         let records = []
         for(let t of this._localCache.things){
+            console.log('t',t.record_type, t.record_id)
             if(this._testIsInSync(t.record_type, t.record_id)== false){ 
                 records.push(t.getSystemRecord())
                 

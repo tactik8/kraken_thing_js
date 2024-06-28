@@ -19,8 +19,8 @@ export class KrThings extends KrThing {
     */
 
 
-    constructor(record_id = null) {
-        super('ItemList', record_id);
+    constructor() {
+        super('ItemList');
 
     }
 
@@ -454,7 +454,11 @@ export class KrThings extends KrThing {
     // -----------------------------------------------------
 
     
+    // -----------------------------------------------------
+    //  API 
+    // -----------------------------------------------------
 
+    
   
     
 }

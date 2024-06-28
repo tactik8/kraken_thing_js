@@ -33,6 +33,7 @@ export async function kraken_api_get_async(apiBaseUrl, apiPath, headers, record_
 
 export async function kraken_api_post_async(apiBaseUrl, apiPath, headers, record) {
 
+    
     let requestOptions = {
         method: 'POST',
         headers: headers,
