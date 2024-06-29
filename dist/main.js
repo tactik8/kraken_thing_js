@@ -188,6 +188,7 @@ class $836e50e45781687c$export$3138a16edeb45799 extends (0, $5OpyM$KrThing) {
         let previousRecord = this.getSystemRecord();
         var k = new (0, $bb461f612cc69085$export$7a23a968115f49cd)();
         var fullRecord = await k.get(this.record_type, this.record_id);
+        console.log(JSON.stringify(fullRecord, null, 4));
         this.setSystemRecord(fullRecord);
         if (this.getSystemRecord() != previousRecord) {
             let eventRecord = {

@@ -194,6 +194,13 @@ function test4(){
     //console.log(things.record_id)
     //console.log('a', JSON.stringify(things.getSystemRecord(), null, 4))
     things.api_post()
+
+
+
+    let t2 = new KrThing("ItemList", "Itemlist1")
+    t2.api_get().then(r=>{
+        console.log(t2.record)
+    })
 }
 
 
