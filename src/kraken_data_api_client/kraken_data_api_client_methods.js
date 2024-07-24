@@ -37,13 +37,14 @@ export async function kraken_api_post_async(apiBaseUrl, apiPath, headers, record
         headers: headers,
         body: JSON.stringify(record)
     };
-    
+
+
     let new_url = new URL(apiPath, apiBaseUrl);
+
     
     const response = await fetch(new_url, requestOptions)
 
     
     let result = await response.json();
-    
     return result
 }

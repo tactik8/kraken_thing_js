@@ -13,6 +13,8 @@ export class KrakenDataApiClient {
 
     init_KrakenApi() {
 
+
+        //this.apiBaseUrl = 'https://5a37e52f-2a27-47ff-b754-2a573636cb5a-00-ayio2unothdd.spock.replit.dev'
         //this.apiBaseUrl = this.apiBaseUrl || 'https://5a37e52f-2a27-47ff-b754-2a573636cb5a-00-ayio2unothdd.spock.replit.dev';
 
         if(!this.apiBaseUrl){this.apiBaseUrl = this.apiBaseUrl || 'https://data.krknapi.com'};

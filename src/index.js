@@ -13,3 +13,4 @@ export var KrThings = KrThingsClass;
 export var KrListItem = KrListItemClass;
 export var KrPropertyValueSpecification = KrPropertyValueSpecificationClass
 export var KrDb = KrDbClass
+export var KrAction = KrActionClass
