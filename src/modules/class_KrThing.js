@@ -42,7 +42,8 @@ export class KrThing extends KrThingRecord {
 
     constructor(record_type = null, record_id = null) {
         super(record_type, record_id);
-        
+        this.basePath = null
+        this._urlOptions = {}
         
     }
 
@@ -271,17 +272,46 @@ export class KrThing extends KrThingRecord {
     //  HTML 
     // -----------------------------------------------------
 
+    get urlOptions(){
 
+        let options = this._urlOptions
+        options.basePath = this.basePath || this._urlOptions?.basePath || null
+        return options
+
+    }
+
+    set urlOptions(value){
+        this._urlOptions = value
+    }
+
+    
     get html(){
-        return krakenHtml
+        return new krakenHtml.KrakenHtmlClass(this.record, this.urlOptions)
     }
     
-    htmlRecord(req){
-        return new krakenHtml.RecordClass(this.record, req)
+    htmlRecord(urlOptions){
+        if(urlOptions && urlOptions != null){ this.urlOptions = urlOptions }
+        let htmlRecord =  new krakenHtml.RecordClass(this.record, this.urlOptions)
+        return htmlRecord.content
     }
 
-    
-    
+    htmlMedia(urlOptions){
+        if(urlOptions && urlOptions != null){ this.urlOptions = urlOptions }
+        
+        let media = new krakenHtml.MediaClass(this.record, this.urlOptions)
+        return media.content
+    }
+
+    htmlRecordPage(urlOptions){
+        if(urlOptions && urlOptions != null){ this.urlOptions = urlOptions }
+        
+        let content = ''
+        content += `<div><h1>${this.get_heading1()}</h1></div>`
+        content += `<div>${this.htmlMedia()}</div>`
+        content += `<div>${this.htmlRecord()}</div>`
+
+        return content
+    }
     
 
     

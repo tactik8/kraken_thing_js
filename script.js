@@ -36,7 +36,7 @@ function test1(){
 
     things.params = {'a': 'aa', 'b': 'bb'}
 
-    element.innerHTML = things.htmlTable()
+    element.innerHTML = things.html.cards()
 
 
     

@@ -30,7 +30,7 @@ export class KrThings extends KrThing {
         this._orderBy = null
         this._orderDirection = null
         this._basePath = null
-        this._params
+        this._urlOptions = {}
 
     }
 
@@ -490,7 +490,6 @@ export class KrThings extends KrThing {
         } else {
             return this._params
         }
-        
     }    
 
     set params(value){
@@ -499,29 +498,15 @@ export class KrThings extends KrThing {
 
     get urlOptions(){
 
-        let options = {}
-        options.params = this.params || {}
-
-        let keys = ['limit', 'offset', 'orderBy', 'orderDirection']
-
-        for(let k of keys){
-            if(this[k] && this[k] != null){
-                options.params[k] = this[k]
-            }
-            
-        }
-        options.basePath = this.basePath
-
+        let options = this._urlOptions
+        options.basePath = this.basePath || this._urlOptions?.basePath || null
         return options
-        
     }
 
     set urlOptions(value){
 
-        for(let k of Object.keys(value)){
-            this[k] = value[k]            
-        }
-        return
+        this._urlOptions = value
+        
         
     }
 
@@ -555,27 +540,26 @@ export class KrThings extends KrThing {
     //  HTML components 
     // -----------------------------------------------------
 
-
-    htmlTable(basePath){
-        if(basePath && basePath != null){ this.basePath = basePath }
+    get html(){
+        return new krakenHtml.KrakenHtmlClass(this.itemRecords, this.urlOptions)
+    }
+    htmlTable(urlOptions){
+        if(urlOptions && urlOptions != null){ this.urlOptions = urlOptions }
 
         console.log(JSON.stringify(this.urlOptions, null, 4))
-        let pagination = new krakenHtml.TableClass(this.itemRecords)
-        pagination.urlOptions = this.urlOptions
+        let pagination = new krakenHtml.TableClass(this.itemRecords, this.urlOptions)
         return pagination.content
     }
 
-    htmlCards(basePath){
-        if(basePath && basePath != null){ this.basePath = basePath }
-        let pagination = new krakenHtml.CardsClass(this.itemRecords)
-        pagination.urlOptions = this.urlOptions
+    htmlCards(urlOptions){
+        if(urlOptions && urlOptions != null){ this.urlOptions = urlOptions }
+        let pagination = new krakenHtml.CardsClass(this.itemRecords, this.urlOptions)
         return pagination.content
     }
     
-    htmlPagination(basePath){
-        if(basePath && basePath != null){ this.basePath = basePath }
-        let pagination = new krakenHtml.PaginationClass(this.itemRecords)
-        pagination.urlOptions = this.urlOptions
+    htmlPagination(urlOptions){
+        if(urlOptions && urlOptions != null){ this.urlOptions = urlOptions }
+        let pagination = new krakenHtml.PaginationClass(this.itemRecords, this.urlOptions)
         return pagination.content
     }
     

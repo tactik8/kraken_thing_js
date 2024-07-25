@@ -79,6 +79,8 @@ class $836e50e45781687c$export$3138a16edeb45799 extends (0, $5OpyM$KrThing) {
 
     */ constructor(record_type = null, record_id = null){
         super(record_type, record_id);
+        this.basePath = null;
+        this._urlOptions = {};
     }
     get html_form() {
     //return get_html_form(this.record_type);
@@ -244,11 +246,34 @@ class $836e50e45781687c$export$3138a16edeb45799 extends (0, $5OpyM$KrThing) {
     // -----------------------------------------------------
     //  HTML 
     // -----------------------------------------------------
-    get html() {
-        return 0, $5OpyM$krakenHtml;
+    get urlOptions() {
+        let options = this._urlOptions;
+        options.basePath = this.basePath || this._urlOptions?.basePath || null;
+        return options;
     }
-    htmlRecord(req) {
-        return new (0, $5OpyM$krakenHtml).RecordClass(this.record, req);
+    set urlOptions(value) {
+        this._urlOptions = value;
+    }
+    get html() {
+        return new (0, $5OpyM$krakenHtml).KrakenHtmlClass(this.record, this.urlOptions);
+    }
+    htmlRecord(urlOptions) {
+        if (urlOptions && urlOptions != null) this.urlOptions = urlOptions;
+        let htmlRecord = new (0, $5OpyM$krakenHtml).RecordClass(this.record, this.urlOptions);
+        return htmlRecord.content;
+    }
+    htmlMedia(urlOptions) {
+        if (urlOptions && urlOptions != null) this.urlOptions = urlOptions;
+        let media = new (0, $5OpyM$krakenHtml).MediaClass(this.record, this.urlOptions);
+        return media.content;
+    }
+    htmlRecordPage(urlOptions) {
+        if (urlOptions && urlOptions != null) this.urlOptions = urlOptions;
+        let content = "";
+        content += `<div><h1>${this.get_heading1()}</h1></div>`;
+        content += `<div>${this.htmlMedia()}</div>`;
+        content += `<div>${this.htmlRecord()}</div>`;
+        return content;
     }
 }
 function $836e50e45781687c$var$ensureArray(value) {
@@ -339,7 +364,7 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
         this._orderBy = null;
         this._orderDirection = null;
         this._basePath = null;
-        this._params;
+        this._urlOptions = {};
     }
     get items() {
         let results = [];
@@ -619,21 +644,12 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
         this._params = value;
     }
     get urlOptions() {
-        let options = {};
-        options.params = this.params || {};
-        let keys = [
-            "limit",
-            "offset",
-            "orderBy",
-            "orderDirection"
-        ];
-        for (let k of keys)if (this[k] && this[k] != null) options.params[k] = this[k];
-        options.basePath = this.basePath;
+        let options = this._urlOptions;
+        options.basePath = this.basePath || this._urlOptions?.basePath || null;
         return options;
     }
     set urlOptions(value) {
-        for (let k of Object.keys(value))this[k] = value[k];
-        return;
+        this._urlOptions = value;
     }
     // -----------------------------------------------------
     //  Filters 
@@ -651,23 +667,23 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
     // -----------------------------------------------------
     //  HTML components 
     // -----------------------------------------------------
-    htmlTable(basePath) {
-        if (basePath && basePath != null) this.basePath = basePath;
+    get html() {
+        return new (0, $5OpyM$krakenHtml).KrakenHtmlClass(this.itemRecords, this.urlOptions);
+    }
+    htmlTable(urlOptions) {
+        if (urlOptions && urlOptions != null) this.urlOptions = urlOptions;
         console.log(JSON.stringify(this.urlOptions, null, 4));
-        let pagination = new (0, $5OpyM$krakenHtml).TableClass(this.itemRecords);
-        pagination.urlOptions = this.urlOptions;
+        let pagination = new (0, $5OpyM$krakenHtml).TableClass(this.itemRecords, this.urlOptions);
         return pagination.content;
     }
-    htmlCards(basePath) {
-        if (basePath && basePath != null) this.basePath = basePath;
-        let pagination = new (0, $5OpyM$krakenHtml).CardsClass(this.itemRecords);
-        pagination.urlOptions = this.urlOptions;
+    htmlCards(urlOptions) {
+        if (urlOptions && urlOptions != null) this.urlOptions = urlOptions;
+        let pagination = new (0, $5OpyM$krakenHtml).CardsClass(this.itemRecords, this.urlOptions);
         return pagination.content;
     }
-    htmlPagination(basePath) {
-        if (basePath && basePath != null) this.basePath = basePath;
-        let pagination = new (0, $5OpyM$krakenHtml).PaginationClass(this.itemRecords);
-        pagination.urlOptions = this.urlOptions;
+    htmlPagination(urlOptions) {
+        if (urlOptions && urlOptions != null) this.urlOptions = urlOptions;
+        let pagination = new (0, $5OpyM$krakenHtml).PaginationClass(this.itemRecords, this.urlOptions);
         return pagination.content;
     }
 }
