@@ -632,7 +632,7 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
         return options;
     }
     set urlOptions(value) {
-        for (let k of value)this[k] = value[k];
+        for (let k of Object.keys(value))this[k] = value[k];
         return;
     }
     // -----------------------------------------------------

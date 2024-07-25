@@ -518,7 +518,7 @@ export class KrThings extends KrThing {
 
     set urlOptions(value){
 
-        for(let k of value){
+        for(let k of Object.keys(value)){
             this[k] = value[k]            
         }
         return
