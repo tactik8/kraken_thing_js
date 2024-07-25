@@ -273,50 +273,21 @@ export class KrThing extends KrThingRecord {
     // -----------------------------------------------------
 
     get urlOptions(){
-
         let options = this._urlOptions
-        options.basePath = this.basePath || this._urlOptions?.basePath || null
+        options.basePath = this.basePath || this._urlOptions?.basePath 
+        options.record_type = this.record_type
+        options.record_id = this.record_id
         return options
-
     }
 
     set urlOptions(value){
         this._urlOptions = value
     }
 
-    
     get html(){
         return new krakenHtml.KrakenHtmlClass(this.record, this.urlOptions)
     }
     
-    htmlRecord(urlOptions){
-        if(urlOptions && urlOptions != null){ this.urlOptions = urlOptions }
-        let htmlRecord =  new krakenHtml.RecordClass(this.record, this.urlOptions)
-        return htmlRecord.content
-    }
-
-    htmlMedia(urlOptions){
-        if(urlOptions && urlOptions != null){ this.urlOptions = urlOptions }
-        
-        let media = new krakenHtml.MediaClass(this.record, this.urlOptions)
-        return media.content
-    }
-
-    htmlRecordPage(urlOptions){
-        if(urlOptions && urlOptions != null){ this.urlOptions = urlOptions }
-        
-        let content = ''
-        content += `<div><h1>${this.get_heading1()}</h1></div>`
-        content += `<div>${this.htmlMedia()}</div>`
-        content += `<div>${this.htmlRecord()}</div>`
-
-        return content
-    }
-    
-
-    
-
-
     
 }
 

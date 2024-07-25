@@ -248,7 +248,9 @@ class $836e50e45781687c$export$3138a16edeb45799 extends (0, $5OpyM$KrThing) {
     // -----------------------------------------------------
     get urlOptions() {
         let options = this._urlOptions;
-        options.basePath = this.basePath || this._urlOptions?.basePath || null;
+        options.basePath = this.basePath || this._urlOptions?.basePath;
+        options.record_type = this.record_type;
+        options.record_id = this.record_id;
         return options;
     }
     set urlOptions(value) {
@@ -256,24 +258,6 @@ class $836e50e45781687c$export$3138a16edeb45799 extends (0, $5OpyM$KrThing) {
     }
     get html() {
         return new (0, $5OpyM$krakenHtml).KrakenHtmlClass(this.record, this.urlOptions);
-    }
-    htmlRecord(urlOptions) {
-        if (urlOptions && urlOptions != null) this.urlOptions = urlOptions;
-        let htmlRecord = new (0, $5OpyM$krakenHtml).RecordClass(this.record, this.urlOptions);
-        return htmlRecord.content;
-    }
-    htmlMedia(urlOptions) {
-        if (urlOptions && urlOptions != null) this.urlOptions = urlOptions;
-        let media = new (0, $5OpyM$krakenHtml).MediaClass(this.record, this.urlOptions);
-        return media.content;
-    }
-    htmlRecordPage(urlOptions) {
-        if (urlOptions && urlOptions != null) this.urlOptions = urlOptions;
-        let content = "";
-        content += `<div><h1>${this.get_heading1()}</h1></div>`;
-        content += `<div>${this.htmlMedia()}</div>`;
-        content += `<div>${this.htmlRecord()}</div>`;
-        return content;
     }
 }
 function $836e50e45781687c$var$ensureArray(value) {
@@ -637,19 +621,23 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
         this._basePath = value;
     }
     get params() {
+        let params = {};
         if (!this._params || this._params == null) return {};
-        else return this._params;
+        else params = this._params;
+        let keys = [
+            "limit",
+            "offset",
+            "orderBy",
+            "orderDirection"
+        ];
+        for (let k of keys){
+            let v = this[k];
+            if (v && v != null) params[k] = v;
+        }
+        return params;
     }
     set params(value) {
         this._params = value;
-    }
-    get urlOptions() {
-        let options = this._urlOptions;
-        options.basePath = this.basePath || this._urlOptions?.basePath || null;
-        return options;
-    }
-    set urlOptions(value) {
-        this._urlOptions = value;
     }
     // -----------------------------------------------------
     //  Filters 
@@ -667,24 +655,17 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
     // -----------------------------------------------------
     //  HTML components 
     // -----------------------------------------------------
+    get urlOptions() {
+        let options = this._urlOptions;
+        options.basePath = this.basePath || this._urlOptions?.basePath;
+        options.params = this.params || options.params;
+        return options;
+    }
+    set urlOptions(value) {
+        this._urlOptions = value;
+    }
     get html() {
         return new (0, $5OpyM$krakenHtml).KrakenHtmlClass(this.itemRecords, this.urlOptions);
-    }
-    htmlTable(urlOptions) {
-        if (urlOptions && urlOptions != null) this.urlOptions = urlOptions;
-        console.log(JSON.stringify(this.urlOptions, null, 4));
-        let pagination = new (0, $5OpyM$krakenHtml).TableClass(this.itemRecords, this.urlOptions);
-        return pagination.content;
-    }
-    htmlCards(urlOptions) {
-        if (urlOptions && urlOptions != null) this.urlOptions = urlOptions;
-        let pagination = new (0, $5OpyM$krakenHtml).CardsClass(this.itemRecords, this.urlOptions);
-        return pagination.content;
-    }
-    htmlPagination(urlOptions) {
-        if (urlOptions && urlOptions != null) this.urlOptions = urlOptions;
-        let pagination = new (0, $5OpyM$krakenHtml).PaginationClass(this.itemRecords, this.urlOptions);
-        return pagination.content;
     }
 }
 function $347a3ff9d6941f10$var$ensureArray(value) {

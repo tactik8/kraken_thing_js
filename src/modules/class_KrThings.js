@@ -485,30 +485,29 @@ export class KrThings extends KrThing {
     } 
 
     get params(){
+
+        let params = {}
         if(!this._params || this._params == null) {
             return {}
         } else {
-            return this._params
+            params = this._params
         }
+
+        let keys = ['limit', 'offset', 'orderBy', 'orderDirection']
+        for(let k of keys){
+            let v = this[k]
+            if(v && v != null){
+                params[k] = v
+            }
+        }        
+        return params
     }    
 
     set params(value){
         this._params = value
     } 
 
-    get urlOptions(){
-
-        let options = this._urlOptions
-        options.basePath = this.basePath || this._urlOptions?.basePath || null
-        return options
-    }
-
-    set urlOptions(value){
-
-        this._urlOptions = value
-        
-        
-    }
+    
 
     // -----------------------------------------------------
     //  Filters 
@@ -539,29 +538,24 @@ export class KrThings extends KrThing {
     // -----------------------------------------------------
     //  HTML components 
     // -----------------------------------------------------
+    
+    get urlOptions(){
+        let options = this._urlOptions
+        options.basePath = this.basePath || this._urlOptions?.basePath 
 
+        options.params = this.params || options.params
+        
+        return options
+    }
+
+    set urlOptions(value){
+        this._urlOptions = value
+    }
+    
     get html(){
         return new krakenHtml.KrakenHtmlClass(this.itemRecords, this.urlOptions)
     }
-    htmlTable(urlOptions){
-        if(urlOptions && urlOptions != null){ this.urlOptions = urlOptions }
-
-        console.log(JSON.stringify(this.urlOptions, null, 4))
-        let pagination = new krakenHtml.TableClass(this.itemRecords, this.urlOptions)
-        return pagination.content
-    }
-
-    htmlCards(urlOptions){
-        if(urlOptions && urlOptions != null){ this.urlOptions = urlOptions }
-        let pagination = new krakenHtml.CardsClass(this.itemRecords, this.urlOptions)
-        return pagination.content
-    }
-    
-    htmlPagination(urlOptions){
-        if(urlOptions && urlOptions != null){ this.urlOptions = urlOptions }
-        let pagination = new krakenHtml.PaginationClass(this.itemRecords, this.urlOptions)
-        return pagination.content
-    }
+   
     
     
     // -----------------------------------------------------
