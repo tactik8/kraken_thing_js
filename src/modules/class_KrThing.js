@@ -11,6 +11,10 @@ import { KrSamples } from 'krakenschema'
 
 import { KrakenDataApiClient } from "../kraken_data_api_client/kraken_data_api_client.js";
 
+import {krakenHtml} from 'krakenhtml'
+
+
+
 //import { kraken_bootstrap } from 'https://tactik8.github.io/krakenJsBootstrap/kraken_bootstrap/kraken_bootstrap.js'
 
 
@@ -261,6 +265,29 @@ export class KrThing extends KrThingRecord {
     }
     
 
+
+
+    // -----------------------------------------------------
+    //  HTML 
+    // -----------------------------------------------------
+
+
+    get html(){
+        return krakenHtml
+    }
+    
+    htmlRecord(req){
+        return new krakenHtml.RecordClass(this.record, req)
+    }
+
+    
+    
+    
+
+    
+
+
+    
 }
 
 

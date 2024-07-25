@@ -1,6 +1,7 @@
 
 import { KrThing } from './class_KrThing.js';
 import { KrListItem } from './class_KrListItem.js';
+import { krakenHtml } from 'krakenhtml';
 
 
 export class KrThings extends KrThing {
@@ -22,6 +23,14 @@ export class KrThings extends KrThing {
     constructor(record_type=null, record_id=null) {
         super(record_type, record_id);
         this.record_type = 'ItemList'
+
+        // Query attributes
+        this._limit=null
+        this._offset = null
+        this._orderBy = null
+        this._orderDirection = null
+        this._basePath = null
+        this._params
 
     }
 
@@ -428,6 +437,82 @@ export class KrThings extends KrThing {
 
 
     // -----------------------------------------------------
+    //  Query attributes 
+    // -----------------------------------------------------
+
+    get limit(){
+        return this._limit
+    }    
+
+    set limit(value){
+        this._limit = value
+    } 
+
+    get offset(){
+        return this._offset
+    }    
+
+    set offset(value){
+        this._offset = value
+    } 
+
+    get orderBy(){
+        return this._orderBy
+    }    
+
+    set orderBy(value){
+        this._orderBy = value
+    } 
+
+    get orderDirection(){
+        return this._orderDirection
+    }    
+
+    set orderDirection(value){
+        this._orderDirection = value
+    } 
+    
+    get basePath(){
+        return this._basePath
+    }    
+
+    set basePath(value){
+        this._basePath = value
+    } 
+
+    get params(){
+        if(!this._params || this._params == null) {
+            return {}
+        } else {
+            return this._params
+        }
+        
+    }    
+
+    set params(value){
+        this._params = value
+    } 
+
+    get urlOptions(){
+
+        let options = {}
+        options.params = this.params || {}
+
+        let keys = ['limit', 'offset', 'orderBy', 'orderDirection']
+
+        for(let k of keys){
+            if(this[k] && this[k] != null){
+                options.params[k] = this[k]
+            }
+            
+        }
+        options.basePath = this.basePath
+
+        return options
+        
+    }
+
+    // -----------------------------------------------------
     //  Filters 
     // -----------------------------------------------------
 
@@ -457,6 +542,30 @@ export class KrThings extends KrThing {
     //  HTML components 
     // -----------------------------------------------------
 
+
+    htmlTable(basePath){
+        if(basePath && basePath != null){ this.basePath = basePath }
+
+        console.log(JSON.stringify(this.urlOptions, null, 4))
+        let pagination = new krakenHtml.TableClass(this.itemRecords)
+        pagination.urlOptions = this.urlOptions
+        return pagination.content
+    }
+
+    htmlCards(basePath){
+        if(basePath && basePath != null){ this.basePath = basePath }
+        let pagination = new krakenHtml.CardsClass(this.itemRecords)
+        pagination.urlOptions = this.urlOptions
+        return pagination.content
+    }
+    
+    htmlPagination(basePath){
+        if(basePath && basePath != null){ this.basePath = basePath }
+        let pagination = new krakenHtml.PaginationClass(this.itemRecords)
+        pagination.urlOptions = this.urlOptions
+        return pagination.content
+    }
+    
     
     // -----------------------------------------------------
     //  API 

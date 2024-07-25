@@ -1,5 +1,6 @@
 import {KrThing as $5OpyM$KrThing} from "krakenrecord";
 import {KrakenSchemas as $5OpyM$KrakenSchemas, KrSamples as $5OpyM$KrSamples} from "krakenschema";
+import {krakenHtml as $5OpyM$krakenHtml} from "krakenhtml";
 
 //import { KrThing as KrThingRecord } from '../../node_modules/krakenrecordjs/kraken_record/kraken_record.js';
 
@@ -56,6 +57,7 @@ class $bb461f612cc69085$export$7a23a968115f49cd {
         return (0, $689b3c5db7d7e242$export$ad21aaf36715c9e5)(this.apiBaseUrl, this.apiPath, this.headers, record, this.headers);
     }
 }
+
 
 
 class $836e50e45781687c$export$3138a16edeb45799 extends (0, $5OpyM$KrThing) {
@@ -239,6 +241,15 @@ class $836e50e45781687c$export$3138a16edeb45799 extends (0, $5OpyM$KrThing) {
     get_headingImage() {
         return this.schema.get_heading_image(this.getBestRecord());
     }
+    // -----------------------------------------------------
+    //  HTML 
+    // -----------------------------------------------------
+    get html() {
+        return 0, $5OpyM$krakenHtml;
+    }
+    htmlRecord(req) {
+        return new (0, $5OpyM$krakenHtml).RecordClass(this.record, req);
+    }
 }
 function $836e50e45781687c$var$ensureArray(value) {
     if (Array.isArray(value)) return value;
@@ -305,6 +316,7 @@ class $14fcc60f5820458e$export$f22625b8b2b04e84 extends (0, $836e50e45781687c$ex
 }
 
 
+
 class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$export$3138a16edeb45799) {
     /* Contains metadata to qualify a value
 
@@ -321,6 +333,13 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
     */ constructor(record_type = null, record_id = null){
         super(record_type, record_id);
         this.record_type = "ItemList";
+        // Query attributes
+        this._limit = null;
+        this._offset = null;
+        this._orderBy = null;
+        this._orderDirection = null;
+        this._basePath = null;
+        this._params;
     }
     get items() {
         let results = [];
@@ -557,6 +576,59 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
         return null;
     }
     // -----------------------------------------------------
+    //  Query attributes 
+    // -----------------------------------------------------
+    get limit() {
+        return this._limit;
+    }
+    set limit(value) {
+        this._limit = value;
+    }
+    get offset() {
+        return this._offset;
+    }
+    set offset(value) {
+        this._offset = value;
+    }
+    get orderBy() {
+        return this._orderBy;
+    }
+    set orderBy(value) {
+        this._orderBy = value;
+    }
+    get orderDirection() {
+        return this._orderDirection;
+    }
+    set orderDirection(value) {
+        this._orderDirection = value;
+    }
+    get basePath() {
+        return this._basePath;
+    }
+    set basePath(value) {
+        this._basePath = value;
+    }
+    get params() {
+        if (!this._params || this._params == null) return {};
+        else return this._params;
+    }
+    set params(value) {
+        this._params = value;
+    }
+    get urlOptions() {
+        let options = {};
+        options.params = this.params || {};
+        let keys = [
+            "limit",
+            "offset",
+            "orderBy",
+            "orderDirection"
+        ];
+        for (let k of keys)if (this[k] && this[k] != null) options.params[k] = this[k];
+        options.basePath = this.basePath;
+        return options;
+    }
+    // -----------------------------------------------------
     //  Filters 
     // -----------------------------------------------------
     filter(propertyValueSpecifications) {
@@ -568,6 +640,28 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
             if (result.every(Boolean) == true) newThings.add(item.item);
         }
         return newThings;
+    }
+    // -----------------------------------------------------
+    //  HTML components 
+    // -----------------------------------------------------
+    htmlTable(basePath) {
+        if (basePath && basePath != null) this.basePath = basePath;
+        console.log(JSON.stringify(this.urlOptions, null, 4));
+        let pagination = new (0, $5OpyM$krakenHtml).TableClass(this.itemRecords);
+        pagination.urlOptions = this.urlOptions;
+        return pagination.content;
+    }
+    htmlCards(basePath) {
+        if (basePath && basePath != null) this.basePath = basePath;
+        let pagination = new (0, $5OpyM$krakenHtml).CardsClass(this.itemRecords);
+        pagination.urlOptions = this.urlOptions;
+        return pagination.content;
+    }
+    htmlPagination(basePath) {
+        if (basePath && basePath != null) this.basePath = basePath;
+        let pagination = new (0, $5OpyM$krakenHtml).PaginationClass(this.itemRecords);
+        pagination.urlOptions = this.urlOptions;
+        return pagination.content;
     }
 }
 function $347a3ff9d6941f10$var$ensureArray(value) {
