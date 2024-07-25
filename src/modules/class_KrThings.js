@@ -159,6 +159,10 @@ export class KrThings extends KrThing {
         return null;
         
     }
+
+    push(listItem){
+        return this.add(listItem)
+    }
     
     add(listItem){
 
@@ -509,6 +513,15 @@ export class KrThings extends KrThing {
         options.basePath = this.basePath
 
         return options
+        
+    }
+
+    set urlOptions(value){
+
+        for(let k of value){
+            this[k] = value[k]            
+        }
+        return
         
     }
 

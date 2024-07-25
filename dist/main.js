@@ -407,6 +407,9 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
         }
         return null;
     }
+    push(listItem) {
+        return this.add(listItem);
+    }
     add(listItem) {
         if (Array.isArray(listItem)) {
             for (let l of listItem)this.add(l);
@@ -627,6 +630,10 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
         for (let k of keys)if (this[k] && this[k] != null) options.params[k] = this[k];
         options.basePath = this.basePath;
         return options;
+    }
+    set urlOptions(value) {
+        for (let k of value)this[k] = value[k];
+        return;
     }
     // -----------------------------------------------------
     //  Filters 
