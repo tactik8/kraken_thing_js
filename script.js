@@ -20,8 +20,8 @@ function test1(){
         records.push({
                         "@context": "https://schema.org/",
                         "@type": "Thing",
-                        "@id": "thing1",
-                        "name": "thing1"
+                        "@id": "thing" + String(i),
+                        "name": "thing"+ String(i)
                     }
                 )
     }

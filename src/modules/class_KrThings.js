@@ -104,10 +104,10 @@ export class KrThings extends KrThing {
     
     get itemRecords(){
 
-        let items = this.getProperty('itemListElement').values
-
+        let items = this.items
+        
         let results = []
-
+        
         for(let item of items){
             results.push(item.item.record); 
         }
