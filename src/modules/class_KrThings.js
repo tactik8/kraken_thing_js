@@ -138,6 +138,17 @@ export class KrThings extends KrThing {
         return results
     }
 
+
+    get length(){
+
+        let values = this.getProperty('itemListElement')?.values
+
+        if(!values || values == null){ return 0 }
+        
+        return values.length
+    }
+
+    
     get firstItem(){
 
         let items = this.getProperty('itemListElement').values

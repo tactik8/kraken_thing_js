@@ -407,6 +407,11 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
         for (let item of items)results.push(item.item.fullRecord);
         return results;
     }
+    get length() {
+        let values = this.getProperty("itemListElement")?.values;
+        if (!values || values == null) return 0;
+        return values.length;
+    }
     get firstItem() {
         let items = this.getProperty("itemListElement").values;
         if (items.length == 0) return null;
