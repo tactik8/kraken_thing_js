@@ -16,7 +16,7 @@
   },
   "name": "krakenthing",
   "description": "Thing class",
-  "version": "1.0.61",
+  "version": "1.0.62",
   "dependencies": {
     "krakenhtml": "^1.0.42",
     "krakenrecord": "^1.0.48",

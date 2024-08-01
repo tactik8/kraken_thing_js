@@ -29,6 +29,7 @@ export class KrThings extends KrThing {
         this._offset = null
         this._orderBy = null
         this._orderDirection = null
+        this._query = null
         this._basePath = null
         this._urlOptions = {}
 
@@ -475,6 +476,15 @@ export class KrThings extends KrThing {
     set orderDirection(value){
         this._orderDirection = value
     } 
+
+    get query(){
+        return this._query
+    }    
+
+    set query(value){
+        this._query = value
+    } 
+    
     
     get basePath(){
         return this._basePath
