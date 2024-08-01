@@ -109,6 +109,7 @@ export class KrThings extends KrThing {
         let results = []
 
         for(let item of items){
+            
             results.push(item.item); 
         }
         return results
@@ -187,40 +188,52 @@ export class KrThings extends KrThing {
         return this.add(listItem)
     }
     
-    add(listItem){
+    add(listItems){
 
+        /*
         if(Array.isArray(listItem)){
             for(let l of listItem){
                 this.add(l)
             }
             return   
         }
-        
-        if(!(listItem instanceof KrListItem)){
-            listItem = new KrListItem(listItem);
-        };
+        */
         
         let lastItem = this.lastItem
-        
-        if (lastItem && lastItem != null){
-            listItem.position = lastItem.position + 1
-            listItem.previousItem = lastItem
-            listItem.nextItem = null
-            lastItem.nextItem = listItem
-            
-        } else {
-            
-            listItem.position = 0
-            listItem.previousItem = null
-            listItem.nextItem = null
-            
-        }
 
-        // Add to list if not already in it.
-        if (!this.get(listItem)){
+        listItems = ensureArray(listItems)
+
+        for(let listItem of listItems){
+
+            if(!(listItem instanceof KrListItem)){
+                listItem = new KrListItem(listItem);
+            };
+
+            if (lastItem && lastItem != null){
+                listItem.position = lastItem.position + 1
+                listItem.previousItem = lastItem
+                listItem.nextItem = null
+                lastItem.nextItem = listItem
+
+            } else {
+
+                listItem.position = 0
+                listItem.previousItem = null
+                listItem.nextItem = null
+
+            }
             this.addProperty('itemListElement', listItem)
+            lastItem = listItem
         }
-        return listItem
+        
+        
+        
+       
+        // Add to list if not already in it.
+        //if (!this.get(listItem)){
+            //this.addProperty('itemListElement', listItem)
+        //}
+        return //listItem
     }
 
     reCalculatePosition(){

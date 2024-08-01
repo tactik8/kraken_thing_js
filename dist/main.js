@@ -431,26 +431,36 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
     push(listItem) {
         return this.add(listItem);
     }
-    add(listItem) {
-        if (Array.isArray(listItem)) {
-            for (let l of listItem)this.add(l);
-            return;
+    add(listItems) {
+        /*
+        if(Array.isArray(listItem)){
+            for(let l of listItem){
+                this.add(l)
+            }
+            return   
         }
-        if (!(listItem instanceof (0, $14fcc60f5820458e$export$f22625b8b2b04e84))) listItem = new (0, $14fcc60f5820458e$export$f22625b8b2b04e84)(listItem);
-        let lastItem = this.lastItem;
-        if (lastItem && lastItem != null) {
-            listItem.position = lastItem.position + 1;
-            listItem.previousItem = lastItem;
-            listItem.nextItem = null;
-            lastItem.nextItem = listItem;
-        } else {
-            listItem.position = 0;
-            listItem.previousItem = null;
-            listItem.nextItem = null;
+        */ let lastItem = this.lastItem;
+        listItems = $347a3ff9d6941f10$var$ensureArray(listItems);
+        for (let listItem of listItems){
+            if (!(listItem instanceof (0, $14fcc60f5820458e$export$f22625b8b2b04e84))) listItem = new (0, $14fcc60f5820458e$export$f22625b8b2b04e84)(listItem);
+            if (lastItem && lastItem != null) {
+                listItem.position = lastItem.position + 1;
+                listItem.previousItem = lastItem;
+                listItem.nextItem = null;
+                lastItem.nextItem = listItem;
+            } else {
+                listItem.position = 0;
+                listItem.previousItem = null;
+                listItem.nextItem = null;
+            }
+            this.addProperty("itemListElement", listItem);
+            lastItem = listItem;
         }
         // Add to list if not already in it.
-        if (!this.get(listItem)) this.addProperty("itemListElement", listItem);
-        return listItem;
+        //if (!this.get(listItem)){
+        //this.addProperty('itemListElement', listItem)
+        //}
+        return; //listItem
     }
     reCalculatePosition() {
         var position;
@@ -1019,8 +1029,12 @@ class $7812463799ce0094$export$f5bc5036afac6116 {
     get things() {
         let things = [];
         for (let record_type of Object.keys(this._db))for (let record_id of Object.keys(this._db[record_type])){
-            let thing = this.get(record_type, record_id);
-            things.push(thing);
+            if (record_type && record_type != null) {
+                if (record_id && record_id != null) {
+                    let thing = this.get(record_type, record_id);
+                    things.push(thing);
+                }
+            }
         }
         return things;
     }

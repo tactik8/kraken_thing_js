@@ -58,8 +58,14 @@ export class KrCache {
         for(let record_type of Object.keys(this._db)){
 
             for(let record_id of Object.keys(this._db[record_type])){
-                let thing = this.get(record_type, record_id)
-                things.push(thing)
+
+                if(record_type && record_type != null){
+                    if(record_id && record_id != null){
+                        let thing = this.get(record_type, record_id)
+                        things.push(thing)
+                    }
+                }
+    
             }
         }
         return things
