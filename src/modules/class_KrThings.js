@@ -543,7 +543,11 @@ export class KrThings extends KrThing {
         let options = this._urlOptions
         options.basePath = this.basePath || this._urlOptions?.basePath 
 
-        options.params = this.params || options.params
+        
+        if(this.params && Object.keys(this.params).length > 0){
+            options.params = this.params 
+        }
+       
         
         return options
     }

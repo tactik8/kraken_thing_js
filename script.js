@@ -27,14 +27,19 @@ function test1(){
     }
 
     things.add(records)
-    
-    things.limit =20
-    things.offset = 140
-    things.orderBy = 'name'
-    things.orderDirection = -1
-    things.basePath = '/test0/test1/test2'
 
-    things.params = {'a': 'aa', 'b': 'bb'}
+
+    things.urlOptions = { params:{offset: 200}}
+    
+    //things.limit =20
+    //things.offset = 140
+    //things.orderBy = 'name'
+    //things.orderDirection = -1
+    //things.basePath = '/test0/test1/test2'
+
+    //things.params = {'a': 'aa', 'b': 'bb'}
+
+    console.log(JSON.stringify(things.urlOptions, null, 4))
 
     element.innerHTML = things.html.table()
 

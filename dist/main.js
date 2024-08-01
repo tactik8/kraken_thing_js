@@ -658,7 +658,7 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
     get urlOptions() {
         let options = this._urlOptions;
         options.basePath = this.basePath || this._urlOptions?.basePath;
-        options.params = this.params || options.params;
+        if (this.params && Object.keys(this.params).length > 0) options.params = this.params;
         return options;
     }
     set urlOptions(value) {
@@ -1133,13 +1133,15 @@ async function $60521b3a3298773d$var$postRecordToApi(api_url, record) {
 }
 
 
+
 var $cf838c15c8b009ba$export$3138a16edeb45799 = (0, $836e50e45781687c$export$3138a16edeb45799);
 var $cf838c15c8b009ba$export$625c98c0044d29a6 = (0, $347a3ff9d6941f10$export$625c98c0044d29a6);
 var $cf838c15c8b009ba$export$f22625b8b2b04e84 = (0, $14fcc60f5820458e$export$f22625b8b2b04e84);
 var $cf838c15c8b009ba$export$6f5bc0f54215664f = (0, $2f5d4658e18a068e$export$6f5bc0f54215664f);
 var $cf838c15c8b009ba$export$45cddf157e5e52d5 = (0, $60521b3a3298773d$export$45cddf157e5e52d5);
 var $cf838c15c8b009ba$export$6104b3febb41c82d = (0, $ec84f2905231493a$export$6104b3febb41c82d);
+var $cf838c15c8b009ba$export$f5bc5036afac6116 = (0, $7812463799ce0094$export$f5bc5036afac6116);
 
 
-export {$cf838c15c8b009ba$export$3138a16edeb45799 as KrThing, $cf838c15c8b009ba$export$625c98c0044d29a6 as KrThings, $cf838c15c8b009ba$export$f22625b8b2b04e84 as KrListItem, $cf838c15c8b009ba$export$6f5bc0f54215664f as KrPropertyValueSpecification, $cf838c15c8b009ba$export$45cddf157e5e52d5 as KrDb, $cf838c15c8b009ba$export$6104b3febb41c82d as KrAction};
+export {$cf838c15c8b009ba$export$3138a16edeb45799 as KrThing, $cf838c15c8b009ba$export$625c98c0044d29a6 as KrThings, $cf838c15c8b009ba$export$f22625b8b2b04e84 as KrListItem, $cf838c15c8b009ba$export$6f5bc0f54215664f as KrPropertyValueSpecification, $cf838c15c8b009ba$export$45cddf157e5e52d5 as KrDb, $cf838c15c8b009ba$export$6104b3febb41c82d as KrAction, $cf838c15c8b009ba$export$f5bc5036afac6116 as KrCache};
 //# sourceMappingURL=main.js.map
