@@ -109,8 +109,10 @@ export class KrThings extends KrThing {
         let results = []
 
         for(let item of items){
-            
-            results.push(item.item); 
+            let v = item?.item
+            if(v && v!=null){
+                results.push(item.item); 
+            }
         }
         return results
     }
@@ -122,7 +124,10 @@ export class KrThings extends KrThing {
         let results = []
         
         for(let item of items){
-            results.push(item.item.record); 
+            let v = item?.item?.record
+            if(v && v != null){
+                results.push(v); 
+            }
         }
         return results
     }
@@ -134,7 +139,10 @@ export class KrThings extends KrThing {
         let results = []
 
         for(let item of items){
-            results.push(item.item.fullRecord); 
+            let v = item?.item?.fullRecord
+            if(v && v != null){
+                results.push(v); 
+            }
         }   
         return results
     }
