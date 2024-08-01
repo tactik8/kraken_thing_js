@@ -389,6 +389,12 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
             this.items = value?.itemListElement;
         }
     }
+    get itemThings() {
+        let items = this.items;
+        let results = [];
+        for (let item of items)results.push(item.item);
+        return results;
+    }
     get itemRecords() {
         let items = this.items;
         let results = [];
@@ -621,6 +627,7 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
     set query(value) {
         this._query = value;
     }
+    item;
     get basePath() {
         return this._basePath;
     }

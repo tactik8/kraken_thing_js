@@ -102,6 +102,17 @@ export class KrThings extends KrThing {
         }
     }
 
+    get itemThings(){
+
+        let items = this.items
+
+        let results = []
+
+        for(let item of items){
+            results.push(item.item); 
+        }
+        return results
+    }
     
     get itemRecords(){
 
@@ -483,7 +494,7 @@ export class KrThings extends KrThing {
 
     set query(value){
         this._query = value
-    } 
+    } item
     
     
     get basePath(){
