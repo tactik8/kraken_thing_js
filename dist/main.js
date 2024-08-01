@@ -393,7 +393,8 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
         let items = this.items;
         let results = [];
         for (let item of items){
-            results.push(item.item)
+            let v = item?.item;
+            if (v && v != null) results.push(item.item);
         }
         return results;
     }
@@ -401,16 +402,18 @@ class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$ex
         let items = this.items;
         let results = [];
         for (let item of items){
-            results.push(item.item.record)
-        };
+            let v = item?.item?.record;
+            if (v && v != null) results.push(v);
+        }
         return results;
     }
     get itemFullRecords() {
         let items = this.getProperty("itemListElement").values;
         let results = [];
         for (let item of items){
-            results.push(item.item.fullRecord)
-        };
+            let v = item?.item?.fullRecord;
+            if (v && v != null) results.push(v);
+        }
         return results;
     }
     get length() {
