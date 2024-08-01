@@ -22,6 +22,10 @@ export class KrCache {
         
     }
 
+    add(thing){
+        return this.set(thing)
+    }
+    
     set(thing){
 
         let record_type = thing.record_type
@@ -32,7 +36,14 @@ export class KrCache {
 
         this._db[record_type] = this._db[record_type] || {}
         this._db[record_type][record_id] = this._db[record_type][record_id] || {}
-        this._db[record_type][record_id].item = thing
+
+        // Merge with current item if exists
+        let currentElement = this._db[record_type][record_id]?.item
+        if(currentElement && currentElement.record_type){
+            currentElement.merge(thing)
+        } else {
+            this._db[record_type][record_id].item = thing
+        }
         this._db[record_type][record_id].date = Date()
     }
 

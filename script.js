@@ -1,4 +1,4 @@
-import { KrThing } from "./src/index.js";
+import { KrCache, KrThing } from "./src/index.js";
 import { KrAction } from "./src/index.js";
 
 import { KrThings } from "./src/index.js";
@@ -13,35 +13,46 @@ function test1(){
     let element = document.getElementById('test1')
 
 
-    let things = new KrThings()
+   
 
-    let records = []
-    for(let i=0; i< 150; i++){
-        records.push({
-                        "@context": "https://schema.org/",
-                        "@type": "Thing",
-                        "@id": "thing" + String(i),
-                        "name": "thing"+ String(i)
-                    }
-                )
+    //element.innerHTML = things.html.table()
+
+
+    let record1 = {
+            "@context": "https://schema.org/",
+            "@type": "Thing",
+            "@id": "thing1",
+            "name": "thing1"
+        }
+    let record2 = {
+        "@context": "https://schema.org/",
+        "@type": "Thing",
+        "@id": "thing1",
+        "name": "thing1",
+        "test": "test1"
     }
 
-    things.add(records)
+
+    let t1 = new KrThing()
+    t1.record = record1
+
+   
+    let t2 = new KrThing()
+    t2.record = record2
 
 
-    things.urlOptions = { params:{offset: 200}}
+    let cache = new KrCache()
+
+    cache.add(t1)
+
+    cache.add(t2)
+
+    let t3 = cache.get(t1.record_type, t1.record_id)
+
     
-    //things.limit =20
-    //things.offset = 140
-    //things.orderBy = 'name'
-    //things.orderDirection = -1
-    //things.basePath = '/test0/test1/test2'
 
-    //things.params = {'a': 'aa', 'b': 'bb'}
-
-    console.log(JSON.stringify(things.urlOptions, null, 4))
-
-    element.innerHTML = things.html.table()
+    console.log(t3._properties.length)
+    console.log(t3.record)
 
 
     

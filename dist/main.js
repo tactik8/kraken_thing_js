@@ -978,6 +978,9 @@ class $7812463799ce0094$export$f5bc5036afac6116 {
         if (!record_id || record_id == null) return null;
         return this._db?.[record_type]?.[record_id]?.["item"] || null;
     }
+    add(thing) {
+        return this.set(thing);
+    }
     set(thing) {
         let record_type = thing.record_type;
         let record_id = thing.record_id;
@@ -985,7 +988,10 @@ class $7812463799ce0094$export$f5bc5036afac6116 {
         if (!record_id || record_id == null) return null;
         this._db[record_type] = this._db[record_type] || {};
         this._db[record_type][record_id] = this._db[record_type][record_id] || {};
-        this._db[record_type][record_id].item = thing;
+        // Merge with current item if exists
+        let currentElement = this._db[record_type][record_id]?.item;
+        if (currentElement && currentElement.record_type) currentElement.merge(thing);
+        else this._db[record_type][record_id].item = thing;
         this._db[record_type][record_id].date = Date();
     }
     post(thing) {
