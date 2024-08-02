@@ -47,7 +47,7 @@ function test1(){
     console.log('t11', date11s)
     let records = []
 
-    for(let i =0; i < 100; i++){
+    for(let i =0; i < 10; i++){
         records.push(t1)
     }
 
@@ -61,7 +61,7 @@ function test1(){
 
     //console.log(JSON.stringify(t.record, null, 4))
 
-    let content = t.getSystemRecord(2)
+    let content = t.getSystemRecord()
     let date3 = new Date()
     let date3s = date3.toISOString()
     console.log('t2', date3s)
@@ -72,7 +72,14 @@ function test1(){
     let date4s = date4.toISOString()
     console.log('t2', date4s, date4-date3)
 
+
     //console.log(JSON.stringify(tt.record, null, 4))
+
+    console.log(t.items.length)
+    console.log(tt.items.length)
+
+    console.log(tt.items)
+
     
 }
 

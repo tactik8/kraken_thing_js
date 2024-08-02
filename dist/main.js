@@ -188,6 +188,43 @@ class $836e50e45781687c$export$3138a16edeb45799 extends (0, $5OpyM$KrThing) {
         //super.method();
         return new $836e50e45781687c$export$3138a16edeb45799(record_type, record_id);
     }
+    // -----------------------------------------------------
+    //  Attributes ListItem 
+    // -----------------------------------------------------
+    get item() {
+        if (this.getProperty("item")) return this.getProperty("item").value;
+        return null;
+    }
+    set item(value) {
+        this.replaceProperty("item", null, value);
+    }
+    get previousItem() {
+        if (this.getProperty("previousItem")) return this.getProperty("previousItem")?.value || null;
+        return null;
+    }
+    set previousItem(value) {
+        //if(value && value.ref){ value = value.ref};
+        this.replaceProperty("previousItem", null, value);
+    }
+    get nextItem() {
+        if (this.getProperty("nextItem")) return this.getProperty("nextItem")?.value || null;
+        return null;
+    }
+    set nextItem(value) {
+        //if(value && value.ref){ value = value.ref};
+        this.replaceProperty("nextItem", null, value);
+    }
+    get position() {
+        if (this.getProperty("position")) return this.getProperty("position")?.value || null;
+        return null;
+    }
+    set position(value) {
+        this.replaceProperty("position", null, value);
+    }
+    // -----------------------------------------------------
+    //  Comment 
+    // -----------------------------------------------------
+    s;
     // API
     async api_get() {
         let previousRecord = this.getSystemRecord();

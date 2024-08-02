@@ -35,6 +35,7 @@ export class KrThings extends KrThing {
 
     }
 
+    
     get items(){
 
         let results = [];
