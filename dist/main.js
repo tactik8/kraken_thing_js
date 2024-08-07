@@ -364,6 +364,11 @@ class $14fcc60f5820458e$export$f22625b8b2b04e84 extends (0, $836e50e45781687c$ex
 
 
 class $347a3ff9d6941f10$export$625c98c0044d29a6 extends (0, $836e50e45781687c$export$3138a16edeb45799) {
+    constructor(record_type = null, record_id = null){
+        super(record_type, record_id);
+    }
+}
+class $347a3ff9d6941f10$export$f92db66ff0ba4240 extends (0, $836e50e45781687c$export$3138a16edeb45799) {
     /* Contains metadata to qualify a value
 
     attributes:
@@ -767,6 +772,8 @@ class $ec84f2905231493a$export$6104b3febb41c82d extends (0, $836e50e45781687c$ex
         this.startTimer();
     }
     get object() {
+        let object = this.getProperty("object").value;
+        if (!object) this.setProperty("object", this.new("Thing"));
         return this.getProperty("object").value;
     }
     set object(value) {
@@ -1041,38 +1048,28 @@ class $2f5d4658e18a068e$export$6f5bc0f54215664f extends (0, $836e50e45781687c$ex
 
 
 
+
 class $7812463799ce0094$export$f5bc5036afac6116 {
     /**
-     * Cache to store things
+     * Cache to store thing objects
      */ constructor(maxTime = null){
         this._db = {};
         this._maxTime = maxTime;
     }
     get(record_type, record_id) {
-        if (!record_type || record_type == null) return null;
-        if (!record_id || record_id == null) return null;
-        return this._db?.[record_type]?.[record_id]?.["item"] || null;
-    }
-    add(thing) {
-        return this.set(thing);
-    }
-    set(thing) {
-        let record_type = thing.record_type;
-        let record_id = thing.record_id;
-        if (!record_type || record_type == null) return null;
-        if (!record_id || record_id == null) return null;
-        this._db[record_type] = this._db[record_type] || {};
-        this._db[record_type][record_id] = this._db[record_type][record_id] || {};
-        // Merge with current item if exists
-        let currentElement = this._db[record_type][record_id]?.item;
-        if (currentElement && currentElement.record_type) currentElement.merge(thing);
-        else this._db[record_type][record_id].item = thing;
-        this._db[record_type][record_id].date = Date();
-    }
-    post(thing) {
-        return this.set(thing);
+        // Get single thing object
+        // Handle if provided a thing object instead of record_type
+        if (record_type.record_type) {
+            record_id = record_type.record_id;
+            record_type = record_type.record_type;
+        }
+        // Return undefined if missing info
+        if (!record_type || record_type == null) return undefined;
+        if (!record_id || record_id == null) return undefined;
+        return this._db?.[record_type]?.[record_id]?.["item"] || undefined;
     }
     get things() {
+        // Retrieves all things from cache
         let things = [];
         for (let record_type of Object.keys(this._db))for (let record_id of Object.keys(this._db[record_type])){
             if (record_type && record_type != null) {
@@ -1083,6 +1080,61 @@ class $7812463799ce0094$export$f5bc5036afac6116 {
             }
         }
         return things;
+    }
+    set(thing) {
+        // Handle if provided array
+        if (Array.isArray(thing)) {
+            let results = thing.map((x)=>this.set(x));
+            return results;
+        }
+        // Handle if provided record instead of thing
+        if (!thing.record_type && thing["@type"]) thing = new (0, $836e50e45781687c$export$3138a16edeb45799)(thing);
+        //
+        let record_type = thing?.record_type || undefined;
+        let record_id = thing?.record_id || undefined;
+        // Return if missing info
+        if (!record_type || record_type == null) return undefined;
+        if (!record_id || record_id == null) return undefined;
+        // Creates path in _db if doesn't exist
+        this._db[record_type] = this._db[record_type] || {};
+        this._db[record_type][record_id] = this._db[record_type][record_id] || {};
+        // Merge with current item if exists (including callbacks)
+        let currentElement = this._db[record_type][record_id]?.item;
+        if (currentElement && currentElement.record_type) currentElement.merge(thing);
+        else this._db[record_type][record_id].item = thing;
+        // Set date in cache
+        this._db[record_type][record_id].date = Date();
+        // Replace thing with thing from cache for all propertyValues 
+        for (let p of thing._properties)for (let pv of p._propertyValues){
+            if (pv.value.record_type) {
+                if (pv.value != this.get(pv.value.record_type, pv.value.record_id)) pv.value = this.set(pv.value);
+            }
+        }
+        // returns the thing in cache
+        return this.get(record_type, record_id);
+    }
+    get length() {
+        return this.things.length;
+    }
+    remove(record_type, record_id) {
+        // Remoe individual thing
+        if (this.get(record_type, record_id)) this._db[record_type][record_id] = {};
+    }
+    clear() {
+        // Removes all values form cache
+        this._db = {};
+    }
+    // -----------------------------------------------------
+    //  Shortcuts 
+    // -----------------------------------------------------
+    push(thing) {
+        return this.set(thing);
+    }
+    add(thing) {
+        return this.set(thing);
+    }
+    post(thing) {
+        return this.set(thing);
     }
 }
 

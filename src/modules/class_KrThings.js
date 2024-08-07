@@ -4,7 +4,15 @@ import { KrListItem } from './class_KrListItem.js';
 import { krakenHtml } from 'krakenhtml';
 
 
+
 export class KrThings extends KrThing {
+   
+    constructor(record_type=null, record_id=null) {
+        super(record_type, record_id);
+    }
+}
+
+export class KrThings2 extends KrThing {
     /* Contains metadata to qualify a value
 
     attributes:

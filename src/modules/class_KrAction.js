@@ -24,6 +24,10 @@ export class KrAction extends KrThing {
     }
 
     get object(){
+        let object = this.getProperty('object').value
+        if(!object){
+            this.setProperty('object', this.new('Thing'))
+        }
         return this.getProperty('object').value
     }
 

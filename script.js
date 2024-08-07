@@ -5,81 +5,62 @@ import { KrThings } from "./src/index.js";
 import { KrListItem } from "./src/index.js";
 import { KrPropertyValueSpecification } from "./src/index.js";
 
+
+import { krakenHelpers as k } from 'krakenhelper'
+
 import {KrDb} from './src/modules/class_krDb/class_krDb.js'
 
 function test1(){
 
-    let date0 = new Date()
-    let date0s = date0.toISOString()
-    console.log('t0', date0s)
-    let t = new KrThings()
 
-    let t1 = new KrThing()
-    t1.record = {
+    let cache = new KrCache();
+
+    let record = {
+        "@context": "https://schema.org/",
+        "@type": "Thing",
+        "@id": "thing1",
+        name: "thing1",
+        other: {
             "@context": "https://schema.org/",
             "@type": "Thing",
-            "@id": "thing1",
-            "name": "thing1",
-            "other": {
-                    "@context": "https://schema.org/",
-                    "@type": "Thing",
-                    "@id": "thing2",
-                    "name": "thing2",
-                    "other": {
-                        "@context": "https://schema.org/",
-                        "@type": "Thing",
-                        "@id": "thing3",
-                        "name": "thing3",
-                        "other": {
-                            "@context": "https://schema.org/",
-                            "@type": "Thing",
-                            "@id": "thing4",
-                            "name": "thing4"
-                        }
-                    }
-                }
+            "@id": "thing2",
+            name: "thing2",
+        },
+        other2: [
+            {
+                "@context": "https://schema.org/",
+                "@type": "Thing",
+                "@id": "thing3",
+                name: "thing3",
+            },
+            {
+                "@context": "https://schema.org/",
+                "@type": "Thing",
+                "@id": "thing4",
+                name: "thing4",
+            },
+        ],
+    };
 
+    var t = new KrThing(record);
 
-        
-        }
-    let date11 = new Date()
-    let date11s = date11.toISOString()
-    console.log('t11', date11s)
-    let records = []
+    cache.set(t);
 
-    for(let i =0; i < 10; i++){
-        records.push(t1)
-    }
+    let t1 = cache.get("Thing", "thing1");
+    console.log(t1.name)
+    //expect(t1.name).toStrictEqual("thing1");
 
-    let date1 = new Date()
-    let date1s = date1.toISOString()
-    console.log('t1', date1s)
-    t.add(records)
-    let date2 = new Date()
-    let date2s = date2.toISOString()
-    console.log('t2', date2s)
+    let t2 = cache.get("Thing", "thing2");
+    //expect(t2.name).toStrictEqual("thing2");
+    console.log(t2.name)
 
-    //console.log(JSON.stringify(t.record, null, 4))
+    let t3 = cache.get("Thing", "thing3");
+    //expect(t2.name).toStrictEqual("thing3");
+    console.log(t3.name)
 
-    let content = t.getSystemRecord()
-    let date3 = new Date()
-    let date3s = date3.toISOString()
-    console.log('t2', date3s)
-    
-    let tt = new KrThings()
-    tt.setSystemRecord(content)
-    let date4 = new Date()
-    let date4s = date4.toISOString()
-    console.log('t2', date4s, date4-date3)
-
-
-    //console.log(JSON.stringify(tt.record, null, 4))
-
-    console.log(t.items.length)
-    console.log(tt.items.length)
-
-    console.log(tt.items)
-
+    let t4 = cache.get("Thing", "thing4");
+    //expect(t2.name).toStrictEqual("thing4");
+    console.log(t4.name)
     
 }
 

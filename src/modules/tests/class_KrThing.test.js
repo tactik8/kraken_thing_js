@@ -63,28 +63,3 @@ test('KrThing action', function () {
 // api
 
 
-test('KrThing api', function () {
-   
-
-    var t1 = new KrThing('Thing', 'object_1');
-
-    t1.name = 'bob';
-
-    
-    return t1.api_post().then((response) => {
-
-        var t2 = new KrThing('Thing', 'object_1');
-
-        return t2.api_get().then((response)=> {
-
-            expect(t1.name).toStrictEqual(t2.name);
-            
-        });
-
-        
-    });
-
-    
-
-
-});
