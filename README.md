@@ -8,8 +8,19 @@ Main library for thing that includes all sub libraries
 - kraken_api
 - kraken_db
 
+
 ## Running tests
+```
 node --experimental-vm-modules node_modules/.bin/jest
+```
+
+## Publish
+```
+npm adduser
+npx parcel build
+npm publish
+```
+
 
 
 ## How to use

@@ -13,54 +13,38 @@ import {KrDb} from './src/modules/class_krDb/class_krDb.js'
 function test1(){
 
 
-    let cache = new KrCache();
-
+    let t= new KrThing()
     let record = {
-        "@context": "https://schema.org/",
-        "@type": "Thing",
-        "@id": "thing1",
-        name: "thing1",
-        other: {
-            "@context": "https://schema.org/",
-            "@type": "Thing",
-            "@id": "thing2",
-            name: "thing2",
-        },
-        other2: [
-            {
-                "@context": "https://schema.org/",
-                "@type": "Thing",
-                "@id": "thing3",
-                name: "thing3",
-            },
-            {
-                "@context": "https://schema.org/",
-                "@type": "Thing",
-                "@id": "thing4",
-                name: "thing4",
-            },
-        ],
-    };
+             "@type": "Person",
+             "@id": "person_1",
+             "givenName": "givenName_1",
+             "familyName": "familyName_1",
+             "email": "test@test.com",
+             "telephone": "1-514-111-2222",
+             "hasOccupation": {
+                 "@type": "Occupation",
+                 "@id": "occupation_1",
+                 "name": "occupation_1"
+                 },
+             "worksfor": {
+                 "@type": "Organization",
+                 "@id": "organization_1",
+                 "name": "test_org_1",
+                 "url": "https://www.test.com"
+                 }
+         }
 
-    var t = new KrThing(record);
+    t.record = record
 
-    cache.set(t);
+    let p = t.getProperty('email')
 
-    let t1 = cache.get("Thing", "thing1");
-    console.log(t1.name)
-    //expect(t1.name).toStrictEqual("thing1");
+    console.log(JSON.stringify(t, null, 4))
 
-    let t2 = cache.get("Thing", "thing2");
-    //expect(t2.name).toStrictEqual("thing2");
-    console.log(t2.name)
 
-    let t3 = cache.get("Thing", "thing3");
-    //expect(t2.name).toStrictEqual("thing3");
-    console.log(t3.name)
 
-    let t4 = cache.get("Thing", "thing4");
-    //expect(t2.name).toStrictEqual("thing4");
-    console.log(t4.name)
+
+
+    
     
 }
 

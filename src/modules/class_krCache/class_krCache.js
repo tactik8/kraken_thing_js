@@ -50,6 +50,9 @@ export class KrCache {
     
     set(thing){
 
+
+        if(!thing || thing == null){ return undefined}
+        
         // Handle if provided array
         if(Array.isArray(thing)){
             let results = thing.map(x => this.set(x))

@@ -180,3 +180,23 @@ test("KrCache infinite loop records", function () {
     expect(cache.length).toStrictEqual(2);
 
 });
+
+
+test("KrCache null", function () {
+    let cache = new KrCache();
+
+    let record = {
+        "@context": "https://schema.org/",
+        "@type": "Thing",
+        "@id": "thing1",
+        name: "thing1",
+    };
+
+    var t = new KrThing(record);
+
+    cache.set(null);
+
+    let t2 = cache.get("Thing", "thing1");
+
+    expect(t2).toStrictEqual(undefined);
+});
